@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FoodForThrought</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FoodForThrought.styles.css" asp-append-version="true" />
+
+    @* Javascript and Bootstrap Link's' *@
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    @* Icon Link *@
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type='text/css'>
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-default bg-white fixed-top">
+            <div class="container">
+
+                <a class="nav-link text-dark" asp-controller="Home" asp-action="Home"> <img src="/images/Logo/logo.png" alt="Logo"  id="logo"> </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                   <ul class="navbar-nav ml-auto mb-2">
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Catalogue">Catalogue</a>
+                    </li>
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
+                        </li>
+                    </ul>
+
+                <ul class="navbar-nav ml-auto mb-2 right-menu">
+                     <img src="/images/Logo/Untitled-1.png" alt="Profile Image" id="Profile_img"/>
+                    <i class="fas fa-angle-down"></i>
+                  
+                    <div class="dropdown-menu">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Dashboard</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Profie</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Sign out"></a>
+                    </div>
+                   
+                    
+                    @* Register Icon and Pages 
+                    <i class="fas fa-user-alt"> Account</i>
+
+                    <div class="dropdown-menu">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                    </div>*@
+                </ul>
+                
+                <ul class="navbar-nav ml-auto mb-2">
+                    
+                    <div class="sidenav" id="Open_side_bar_menu">
+                        <i class="fa fa-close" onclick="ClosesideBar()"></i>
+
+                        <div class="container" id="side_bar_body">
+                            <h2 id="side_bar_heading">Food For Thought</h2>
+                            <p id="side_bar_subheading">
+                                Etiam convallis, felis quis dapibus dictum, libero mauris luctus nunc, non
+                                fringilla purus ligula non justo. Non fringilla purus ligula justo.Etiam convallis, felis quis dapibus dictum, libero mauris luctus nunc, non
+                                fringilla purus ligula non justo. Non fringilla purus ligula justo.
+                            </p>
+                        </div>
+
+                        <div class="container" style="text-align: center;" id="side_bar_body">
+                            <h3 id="side_bar_heading"  >Download App Now</h3>
+                            <a href="#"><img id="app_images" src="/images/Logo/Android_App.png" alt="Android App Icon"></a>
+                            <a href="#"><img id="app_images" src="/images/Logo/App.png" alt="IOS App Icon"></a>
+                        </div> 
+                        
+                        
+                        <div class="container" id="side_bar_body">
+                            <h3 id="side_bar_contactus_heading">Contact Us</h3>
+                           <ul>
+                                <a><i class="fas fa-phone-square-alt" ></i>+01145928421</a>
+                                <br/>
+                                <a><i class="fas fa-mail-bulk"></i>+01145928421</a>
+                                <br />
+                                <a><i class="fas fa-address-card"></i>+01145928421</a>
+                           </ul>
+                        </div>
+
+                    </div>
+
+                    <i class="fas fa-align-justify"  onclick="OpensideBar()"></i>
+                </ul>
+
+
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container-fluid text-md-left">
+            <div class="row text-md-left">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Food For Thought</h5>
+                    <p>Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.</p>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Download The App Now</h5>
+                    <div class="download_app">
+                        <div class="row">
+                            <div class="col-6">
+                            <a href="#"><img src="/images/Catalogue/an_download_app.png" width="100%"></a>
+                            </div>
+                            <div class="col-6">
+                            <a href="#"><img src="/images/Catalogue/download_app.png" width="100%"></a>
+                            </div>
+                        </div>
+                </div>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">Home</a>
+                    </p>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">Catalouge</a>
+                    </p>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">About</a>
+                    </p>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">Contact</a>
+                    </p>
+                    <p>
+                        <a href="#" class="text-white" style="text-decoration: none;">My Acount</a>
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">News Letter</h5>
+                    
+                    <form >
+                        <div class="form-group">
+                           <input style="padding: 7px;" type="email" class="form-control1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                          </div>
+                          <input id="newsletter_button" type="submit" class="btn btn-primary text-center" style="margin-top: 10px;">
+                    </form>
+                    <ul class="list-unstyled list-inline" style="margin-top: 30px;">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact us</h5>
+                    <p>
+                        <i id="footer_icon" class="fas fa-home mr-3"></i> University Of Sialkot
+                    </p>
+                    <p>
+                        <i id="footer_icon" class="fas fa-envelope mr-3"></i> Contact@Foodforthoght
+                    </p>
+                    <p>
+                        <i id="footer_icon" class="fas fa-phone mr-3"></i> +923045879645
+                    </p>
+                    <p>
+                        <i id="footer_icon" class="fas fa-print mr-3"></i> +923458796521
+                    </p>
+                </div>
+
+            </div>
+
+            <hr class="mb-4">
+            <div class="row align-items-center text-center">
+                <p>
+                    Copyright 2023 All Rights Reserved By:
+                    <a href="#" style="text-decoration: none;">
+                    <strong class="text-warning">Food For Thought</strong></a>
+                </p>
+            </div>
+
+            <button onclick="topFunction()" id="myBtn"><i class="fa fa-angle-up"></i></button>
+        </div>
+    </footer>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

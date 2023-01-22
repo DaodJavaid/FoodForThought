@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+
+<div class="container" id="login_main_body">
+    <div class="row">
+        <div class="col-md-6" >
+            <img src="/images/Login/login_page.png" alt="Login Page Image" id="login_page" />
+        </div> 
+        
+        <div class="col-md-6" id="login_page_section_2">
+            <div class="row">
+                <h2>Login</h2>
+            </div>
+            <div class="row">
+                <h6>Don't have an account? <a asp-controller="Home" asp-action="Register"> Create here </a> </h6>
+            </div>
+            <div class="row">
+                 <form action="#" id="login_form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="inputpassword1" placeholder="Enter Your Password" />
+                        </div>
+                            <div class="form-group">
+                        <input type="reset" value="Forgot password?" typeof="submited" id="Forgot" style="border: none; background-color: white; margin-bottom: 10px;"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="Login_button">Login Now</button>
+
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
