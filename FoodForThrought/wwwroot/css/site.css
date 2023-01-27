@@ -297,6 +297,7 @@ body {
 
 .form-control {
     padding: 15px;
+    border-radius: 10px;
 }
 
 #inputTextarea1 {
@@ -1046,6 +1047,7 @@ video {
     }
 
     .banner__content .banner__content-text-inner {
+        margin-top: -7px;
         background-color: #ffffff;
         padding: 40px;
         border-radius: 2px;
