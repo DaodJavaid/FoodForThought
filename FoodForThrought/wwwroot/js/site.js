@@ -42,5 +42,15 @@ function topFunction() {
 
 
 
-/*==========  image zoomsl Plugin  ==========*/
-$(".zoomin").imagezoomsl();
+/*==========  Animation on Scroll  ==========*/
+
+$('.block').smoove({ offset: '40%' });
+
+
+
+/*==========  Signup Check  ==========*/
+
+document.addEventListener("DOMContentLoaded", function () {
+    var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+    myModal.show();
+});

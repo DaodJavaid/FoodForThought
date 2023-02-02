@@ -1,13 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ContactUsForm
+
+
 @{
+    // This is Confirmation on contact us Form
+    var checkmail = TempData["Check"] as string;
+
 }
 
 
-
- @* COntact us page Banner*@
-
+@* COntact us page Banner*@
 
 <header class="contact_us_page_banner"></header>
 
@@ -18,30 +19,31 @@
                     <h2 id="heading_section_left_first">
                         Fast Support Team
                     </h2>
-                    <p>
-                        Etiam convallis, felis quis dapibus dictum, libero mauris luctus nunc, non fringilla purus
-                        ligula non justo. Non fringilla purus.
+                <p id="heading_section_left_first_bottom">
+                    We understand the importance of timely and effective resolution of your queries. Our team is committed to providing you with the best possible support and we will do everything in our power to solve your concerns as quickly as possible.
                     </p>
                 </div>
                 <div class="heading_section_left_inner">
-                    <h4>New York</h4>
-                    <p>198 West 21th Street, Suite 721 Barselona 20020</p>
-                    <p>Email: superfood@example.com</p>
-                    <p>Phone:+88(0) 101 0000 000</p>
+                <h4 id="heading_section_left_first">Personal Info</h4>
+                <p id="heading_section_left_first_bottom">
+                University Of Sialkot, Pakistan    
+                </p>
+                <p id="heading_section_left_first_bottom">Email: contact@foodforthought.com</p>
+                <p id="heading_section_left_first_bottom">Phone:+92 344 4888 271</p>
 
                 </div>
             </div>
             <div class="col-md-6" id="inner_section2">
                 <div class="heading_section_right">
-                    <form action="#">
+                <form method="post" action="Contact_us_form">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputname1" placeholder="Enter Your Name" />
+                            <input type="text" name="user_name" class="form-control" id="inputname1" placeholder="Enter Your Name" />
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
+                        <input type="email" name="user_email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" id="inputTextarea1" placeholder="Enter Your Messege"></textarea>
+                        <textarea type="text" class="form-control" name="user_message" id="inputTextarea1" placeholder="Enter Your Messege"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary" id="contant_button">Submit</button>

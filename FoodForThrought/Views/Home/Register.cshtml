@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Register
 
 
 
@@ -15,21 +11,21 @@
                 <h2>Create an Account</h2>
             </div>
             <div class="row">
-                <h6>Already have an account? <a asp-controller="Home" asp-action="Register"> Login </a> </h6>
+                <h6>Already have an account? <a asp-controller="Home" asp-action="Login"> Login </a> </h6>
             </div>
             <div class="row">
-                <form action="#" id="Register_form">
+                <form method="post" action="Register_user" id="Register_form">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inputname1" placeholder="Enter Your Username" />
+                        <input type="text" name="username" class="form-control" id="inputname1" placeholder="Enter Your Username" />
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
+                        <input type="email" name="email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="inputpassword1" placeholder="Enter Your Password" />
+                        <input type="password" name="password" class="form-control" id="inputpassword1" placeholder="Enter Your Password" />
                     </div> 
                     <div class="form-group">
-                        <input type="password" class="form-control" id="inputpassword2" placeholder="Enter Confirm Password" />
+                        <input type="password" name="confirm_password" class="form-control" id="inputpassword2" placeholder="Enter Confirm Password" />
                     </div>
                     <button type="submit" class="btn btn-primary" id="Register_button">Submit & Register</button>
 
@@ -38,7 +34,7 @@
         </div>
 
         <div class="col-md-6">
-            <img src="/images/Login/login_page.png" alt="Register Page Image" id="Register_page" />
+            <img src="/images/Login/login.jpg" alt="Register Page Image" id="Register_page" />
         </div>
 
     </div>
