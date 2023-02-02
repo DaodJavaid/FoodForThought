@@ -42,5 +42,10 @@ function topFunction() {
 
 
 
-/*==========  image zoomsl Plugin  ==========*/
-$(".zoomin").imagezoomsl();
+/*==========  Animation on Scroll  ==========*/
+
+$('.block').smoove({ offset: '40%' });
+
+
+
+

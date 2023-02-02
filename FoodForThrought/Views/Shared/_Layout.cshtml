@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-default bg-white fixed-top">
             <div class="container">
 
-                <a class="nav-link text-dark" asp-controller="Home" asp-action="Home"> <img src="/images/Logo/logo.png" alt="Logo"  id="logo"> </a>
+                <a class="nav-link text-dark" asp-controller="Home" asp-action="Home"><img src="/images/Logo/LOGO.png" alt="Logo"  id="logo"> </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -48,9 +48,20 @@
                         <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
                         </li>
-                    </ul>
 
-                <ul class="navbar-nav ml-auto mb-2 right-menu">
+
+                    @* Register Icon and Pages *@
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
+                        </div>
+                    </div>
+
+                @*  <ul class="navbar-nav ml-auto mb-2 right-menu">
                      <img src="/images/Logo/Untitled-1.png" alt="Profile Image" id="Profile_img"/>
                     <i class="fas fa-angle-down"></i>
                   
@@ -59,18 +70,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Profie</a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Sign out"></a>
                     </div>
-                   
-                    
-                    @* Register Icon and Pages 
-                    <i class="fas fa-user-alt"> Account</i>
+                </ul>*@
 
-                    <div class="dropdown-menu">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
-                    </div>*@
-                </ul>
-                
-                <ul class="navbar-nav ml-auto mb-2">
+                   
+                 </ul>
+                <ul class="navbar-nav ml-auto mb-2" id="open-sidebar">
                     
                     <div class="sidenav" id="Open_side_bar_menu">
                         <i class="fa fa-close" onclick="ClosesideBar()"></i>
@@ -122,9 +126,9 @@
         <div class="container-fluid text-md-left">
             <div class="row text-md-left">
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Food For Thought</h5>
-                    <p>Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.</p>
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Download The App Now</h5>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">Food For Thought</h5>
+                    <p id="subtext_footer">Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.</p>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">Download The App Now</h5>
                     <div class="download_app">
                         <div class="row">
                             <div class="col-6">
@@ -138,26 +142,26 @@
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
-                    <p>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">Useful Links</h5>
+                    <p id="subtext_footer">
                         <a href="#" class="text-white" style="text-decoration: none;">Home</a>
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <a href="#" class="text-white" style="text-decoration: none;">Catalouge</a>
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <a href="#" class="text-white" style="text-decoration: none;">About</a>
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <a href="#" class="text-white" style="text-decoration: none;">Contact</a>
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <a href="#" class="text-white" style="text-decoration: none;">My Acount</a>
                     </p>
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">News Letter</h5>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">News Letter</h5>
                     
                     <form >
                         <div class="form-group">
@@ -180,17 +184,17 @@
 
                 </div>
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact us</h5>
-                    <p>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">Contact us</h5>
+                    <p id="subtext_footer">
                         <i id="footer_icon" class="fas fa-home mr-3"></i> University Of Sialkot
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <i id="footer_icon" class="fas fa-envelope mr-3"></i> Contact@Foodforthoght
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <i id="footer_icon" class="fas fa-phone mr-3"></i> +923045879645
                     </p>
-                    <p>
+                    <p id="subtext_footer">
                         <i id="footer_icon" class="fas fa-print mr-3"></i> +923458796521
                     </p>
                 </div>
@@ -216,6 +220,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.smoove.js" asp-append-version="true"></script>
+    <script src="/js/jquery.smoove.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

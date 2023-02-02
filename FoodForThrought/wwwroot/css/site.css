@@ -60,7 +60,7 @@ html {
 .nav-item
 {
     font-size: 18px;
-    font-family: Poppins;
+    font-family: Lato;
     font-weight: 600;
 }
 
@@ -143,15 +143,6 @@ html {
     line-height: 1.6;
 }
 
-.dropdown-menu {
-    margin-top: 26px;
-    display: none;
-    position: absolute;
-    border: 2px solid #252525;
-    min-width: 160px;
-    z-index: 1;
-    background-color: #252525;
-}
 
 .dropdown-menu a:hover {
     background-color: #ffffff;
@@ -255,7 +246,7 @@ body {
     text-align: left;
 }
 
-#contact_heading, #about_heading {
+#about_heading {
     font-size: 100px;
     font-family: Poppins;
     font-weight: bold;
@@ -278,8 +269,13 @@ body {
 
 #heading_section_left_first {
     font-size: 30px;
-    font-family: Poppins;
+    font-family: Lato;
     font-weight: bold;
+}
+
+#heading_section_left_first_bottom {
+    font-size: 16px;
+    font-family: Poppins;
 }
 
 .form-control {
@@ -348,6 +344,7 @@ body {
 }
 
 #how_to_use_heading{
+    font-family: lato;
     text-align: center;
     font-weight: bolder;
     text-transform: uppercase;
@@ -356,8 +353,10 @@ body {
     color: #fff;
 }
 
-#headeing_under_use
-{
+#headeing_under_use {
+    font-family: Corbert Condensed;
+    font-size: 23px;
+    font-weight: bold;
     color: #fff;
 }
 
@@ -366,10 +365,12 @@ body {
     text-align: justify
 }
 
-
-
+#how_to_use_image
+{
+    width: 100%;
+    height:100%;
+}
 /********************** Counter *******************/
-
 .counter {
     color: #222;
     font-family: 'Rubik', sans-serif;
@@ -472,6 +473,10 @@ body {
 }
 
 #user_say {
+    font-family: lato;
+    text-align: center;
+    font-weight: bolder;
+    text-transform: uppercase;
     margin-bottom: 50px;
 }
 
@@ -484,8 +489,12 @@ body {
     box-shadow: 0 19px 38px rgba(0,0,0,0.10), 0 15px 12px rgba(0,0,0,0.02);
 }
 
-.img-circle
-{
+    .shadow-effect:hover {
+        background-color: #808080;
+        color: #fff;
+    }
+
+.img-circle {
     margin-bottom: 20px;
 }
 
@@ -497,6 +506,8 @@ body {
 }
 
 .testimonial-name {
+    font-family: lato;
+    font-size: 16px;
     margin: -17px auto 0;
     display: table;
     width: auto;
@@ -513,6 +524,11 @@ body {
         background: #808080;
     }
 
+#testimonial-name-messege {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: normal;
+}
     #customers-testimonials .item {
         text-align: center;
         transform: scale3d(0.8, 0.8, 1);
@@ -539,6 +555,8 @@ body {
 
 
 #Special_Team_heading {
+    font-family: lato;
+    font-weight: bold;
     margin-bottom: 50px;
     color: #252525;
 }
@@ -688,22 +706,20 @@ body {
     padding-right: 30px;
 }
 
-#Login_button
-{
+#Login_button {
     padding: 15px;
     font-family: Poppins;
-    background-color: #252525 !important;
+    background-color: #964B00 !important;
     border: 1px solid;
 }
 
-#Login_button:hover 
-{
-    padding: 15px;
-    font-family: Poppins;
-    background-color: #ffffff !important;
-    border: 1px solid #252525;
-    color: #252525;
-}
+    #Login_button:hover {
+        padding: 15px;
+        font-family: Poppins;
+        background-color: #808080 !important;
+        border: 1px solid #808080;
+        color: #FFF;
+    }
 
 
 
@@ -732,21 +748,19 @@ body {
     margin-top: 40px;
 }
 
-#Register_button
-{
+#Register_button {
     padding: 15px;
     font-family: Poppins;
-    background-color: #252525 !important;
+    background-color: #964B00 !important;
     border: 1px solid;
 }
 
-#Register_button:hover 
-{
+    #Register_button:hover {
         padding: 15px;
         font-family: Poppins;
-        background-color: #ffffff !important;
+        background-color: #808080 !important;
         border: 1px solid #252525;
-        color: #252525;
+        color: #fff;
     }
 
 
@@ -754,8 +768,20 @@ body {
 
 /***************************   footer **********************/
 
-.list-inline-item 
-{
+
+#heading_footer {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold; 
+}
+
+#subtext_footer {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.list-inline-item {
     background: #964B00;
     padding: 7px 5px 7px 5px;
     border-radius: 100%;
@@ -797,13 +823,18 @@ body {
 
 /***************************    Catalouge    ****************************/
 .masthead {
+    background: url(/images/Catalogue/shop_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     height: 100vh;
     min-height: 500px;
-    background-image: url(/images/Catalogue/shop_background.jpg);
-    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    margin-bottom: 130px;
+}
+
+.wrapper
+{
+    padding-top: 150px; 
 }
 
 .overlay {
@@ -891,7 +922,10 @@ body {
 }
 
     .product__title a {
-        color: #222222;
+        font-family: Poppins;
+        text-decoration: none;
+        font-weight: 500;
+        color: #252525;
     }
 
         .product__title a:hover {
@@ -944,10 +978,16 @@ body {
 
         .pagination li a:hover,
         .pagination li a.current {
-            background-color: #c7a254;
-            border-color: #c7a254;
+            background-color: #964B00;
+            border-color: #964B00;
             color: #ffffff;
         }
+            .pagination li a:hover,
+            .pagination li a.current:hover {
+                background-color: #808080;
+                border-color: #808080;
+                color: #ffffff;
+            }
 
 #next_page
 {
@@ -973,57 +1013,51 @@ body {
 
 
     /*************** Single catalouge *******************/
+#main_top_single_product_page {
+    padding: 100px 0px 100px 0px;
+}
 
-.pagetitle__heading {
-    font-size: 55px;
-    color: #ffffff;
-    margin-bottom: 0;
+#single-product-picture
+{
+    padding: 10px;
+}
+
+#single-picture {
+    width: 100%;
+}
+
+#single-product-title
+{
+    font-family: lato;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#single-product-description
+{
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 
-.page-title .breadcrumb-item a {
-    color: #ffffff;
+#emotion_button {
+    background-color: #964B00;
+    font-family: Poppins;
+    font-size: 14px;
+    border-color: #964B00;
 }
 
-    .page-title .breadcrumb-item a:hover {
-        color: #c7a254;
+    #emotion_button:hover {
+        background-color: #808080;
+        border-color: #808080;
     }
 
-.page-title .breadcrumb-item + .breadcrumb-item::before {
-    color: #ffffff;
-}
-
-.page-title .breadcrumb-item.active {
-    color: #c7a254;
-}
-
-.hr-dashed {
-    border-style: dashed;
-}
-
-
-
 /********************* Home *****************************/
-/*.home {
-    height: 150vh;
-    position: relative;
-    background: #000;
-    padding-top: 50px;
-}
-
-video {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-    */
 /*-----------------------
     Banners
 ------------------------*/
-.pt-0_section2
-{
+.pt-0_section2 {
     height: 700px;
     padding-top: 150px;
 }
@@ -1039,12 +1073,42 @@ video {
     align-items: center;
 }
 
-    .banner__content .banner__content-text {
-        flex: 0 0 46%;
-        max-width: 46%;
-        position: relative;
-        z-index: 2;
-    }
+.heading__subtitle__title
+{
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.heading__title__heading {
+    font-family: lato;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.heading__desc_title
+{
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#signature
+{
+    padding: 0px 100px 0px 100px;
+}
+
+#sinature_image
+{
+    width: 100%;
+}
+
+.banner__content .banner__content-text {
+    flex: 0 0 46%;
+    max-width: 46%;
+    position: relative;
+    z-index: 2;
+}
 
     .banner__content .banner__content-text-inner {
         margin-top: -7px;
@@ -1058,10 +1122,14 @@ video {
         text-align: center;
     }
 
-    .banner__content .banner__content-img {
-        flex: 0 0 54%;
-        max-width: 54%;
-    }
+#two_images_banner {
+    width: 100%;
+}
+
+.banner__content .banner__content-img {
+    flex: 0 0 54%;
+    max-width: 54%;
+}
 
 .banner-layout2 .banner__content {
     flex-direction: row-reverse;
@@ -1101,6 +1169,20 @@ video {
 
 /* Mobile Phones and tablets */
 @media only screen and (min-width: 320px) and (max-width: 767px) {
+
+    /*open-sidebar*/
+    #open-sidebar {
+        display: none;
+    }
+    /*open-sidebar*/
+
+
+    /*full panding home page second section*/
+    #second_home_section {
+        padding: 10px;
+    }
+    /*full panding home page second section*/
+
     .hero-banner .hero__banner-img {
         margin: 150px auto 0;
         max-width: 270px;
@@ -1153,9 +1235,17 @@ video {
 
 
 /*********************** Home 3section ****************************/
-#title_home_3section{
+#title_home_3section
+{
+    font-family: lato;
     padding-top: 100px;
     padding-bottom: 100px;
-    font: bold;
+    font-weight: bold;
 }
 
+
+/*********************** Home full page video ****************************/
+#videoBG {
+    width: 100%;
+    height: auto;
+}
