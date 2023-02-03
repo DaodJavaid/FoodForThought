@@ -30,10 +30,18 @@
     transition: 0.5s;
 }
 
-    .bg-white.scrolled {
-        background: #964B00 !important;
-        box-shadow: #000000 5px;
-    }
+.fixed-top.scrolled {
+    background: #252525 !important;
+    box-shadow: #000000 5px;
+}
+
+#info_side_bar 
+{
+    color: white;
+}
+#mobile_menu {
+display: none;
+}
 
 html {
     font-size: 14px;
@@ -1177,9 +1185,23 @@ body {
     #open-sidebar {
         display: none;
     }
-    /*open-sidebar*/
 
+    #desktop_Menu
+    {
+        display:none;
+    }
 
+    #mobile_menu {
+        color: white;
+        padding: 5px;
+        border: solid;
+        margin-right: 40px;
+    }
+
+    
+    .sidenav {
+        text-align: center;
+    }
     /*full panding home page second section*/
     #second_home_section {
         padding: 10px;
