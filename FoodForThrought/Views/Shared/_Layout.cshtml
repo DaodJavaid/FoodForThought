@@ -42,7 +42,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Catalogue">Catalogue</a>
                     </li>
-                       
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
                     </li>
@@ -61,35 +60,8 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
                         </div>
                     </div>
-
-                @*  <ul class="navbar-nav ml-auto mb-2 right-menu">
-                     <img src="/images/Logo/Untitled-1.png" alt="Profile Image" id="Profile_img"/>
-                    <i class="fas fa-angle-down"></i>
-                  
-                    <div class="dropdown-menu">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Dashboard</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Profie</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Sign out"></a>
-                    </div>
-                </ul>*@
-
-                   
                  </ul>
-                <ul class="navbar-nav ml-auto mb-2" id="open-sidebar">
-                    
-
-                    @* Register Icon and Pages *@
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
-                        </div>
-                    </div>                   
-                 </ul>
-
+               
                 <ul class="navbar-nav ml-auto mb-2">
                     <div class="sidenav" id="Open_side_bar_menu_mobile">
                         <i class="fa fa-close" onclick="ClosesideBar_mobile()"></i>
@@ -118,9 +90,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
                         </div>
                     </div>
-                 </div>
             <i class="fas fa-align-justify" id="mobile_menu" onclick="OpensideBar_mobile()"></i>
-
+            
+                 </div>
             </ul>
 
 
