@@ -51,9 +51,32 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         public IActionResult login_user(Login login)
         {
+            var check_registration = _registerDbcontext.Signup.ToList();
+
+            if (check_registration != null)
+            {
+                foreach(var getdata in check_registration)
+                {
+                    String mail = getdata.email;
+                    String pass = getdata.password;
+
+
+                    if(login.email == mail && login.Password == pass)
+                    {
+                        TempData["confirm"] = "Login Successfully";
+                        break;
+                    }
+                    else
+                    {
+                            TempData["confirm"] = "Email and Password Incorrect";
+                    }
+                }
+            }
+
+
             return RedirectToAction("Home");
         }
 
