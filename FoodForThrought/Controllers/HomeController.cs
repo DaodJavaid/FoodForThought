@@ -51,6 +51,61 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
+
+
+
+        [HttpPost]
+        public IActionResult Register_user(Register register)
+        {
+
+            var check_registration = _registerDbcontext.Signup.ToList();
+
+            if (check_registration != null)
+            {
+                foreach (var getdata in check_registration)
+                {
+                    String mail = getdata.email;
+
+
+                    if (register.email == mail )
+                    {
+                        TempData["confirm"] = "Email Already Exit";
+                        return RedirectToAction("Register");
+                    }
+                }
+            }
+
+
+
+            if (ModelState.IsValid)
+            {
+                if (register.password == register.confirm_password)
+                {
+                    try
+                    {
+                        _registerDbcontext.Add(register);
+                        _registerDbcontext.SaveChanges();
+                        TempData["confirm"] = "Signup Successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["confirm"] = "There is Some Error. user Not register";
+
+                    }
+                }
+                else
+                {
+                    TempData["confirm"] = "Password And Confirm Password Is Not Same";
+                    return RedirectToAction("Register");
+                }
+
+
+            }
+            return RedirectToAction("Login");
+        }
+
+
+
         [HttpPost]
         public IActionResult login_user(Login login)
         {
