@@ -39,8 +39,8 @@
 {
     color: white;
 }
-#mobile_menu {
-display: none;
+#Mobile-menu-mobile {
+    display: none;
 }
 
 html {
@@ -1185,9 +1185,19 @@ body {
     #open-sidebar {
         display: none;
     }
+
+    #desktop_Menu
+    {
+        display: none;
+    }
     /*open-sidebar*/
 
-
+    #mobile_menu_Icon {
+        color: white;
+        border: 1px solid;
+        padding: 10px;
+        margin-right: 50px;
+    }
     /*full panding home page second section*/
     #second_home_section {
         padding: 10px;

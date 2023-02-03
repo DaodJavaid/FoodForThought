@@ -30,11 +30,6 @@
 
                 <a class="nav-link text-dark" asp-controller="Home" asp-action="Home"><img src="/images/Logo/LOGO.png" alt="Logo"  id="logo"> </a>
                 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
                 <ul class="navbar-nav ml-auto mb-2" id="desktop_Menu">
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
@@ -61,41 +56,48 @@
                         </div>
                     </div>
                  </ul>
-               
-                <ul class="navbar-nav ml-auto mb-2">
-                    <div class="sidenav" id="Open_side_bar_menu_mobile">
-                        <i class="fa fa-close" onclick="ClosesideBar_mobile()"></i>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Catalogue">Catalogue</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
-                    </li>
 
 
-                        @* Register Icon and Pages *@
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
+                 @************   Mobile Menu   **************
+
+                <ul class="navbar-nav ml-auto mb-2" id="Mobile-menu-mobile">
+
+                    <div class="sidenav" id="Open_side_bar_menu">
+                        <i class="fa fa-close" onclick="ClosesideBar()"></i>
+
+                        <div class="container" id="side_bar_body">
+                            <h2 id="side_bar_heading">Food For Thought</h2>
+                            <p id="side_bar_subheading">
+                                Food for thought is here to help you choose the best food for you. It detects your emotions and minimizes the appropriate food for you that is the best for your with the help of questions.
+                            </p>
                         </div>
+
+                        <div class="container" style="text-align: center;" id="side_bar_body">
+                            <h3 id="side_bar_heading">Download App Now</h3>
+                            <a href="#"><img id="app_images" src="/images/Logo/Android_App.png" alt="Android App Icon"></a>
+                            <a href="#"><img id="app_images" src="/images/Logo/App.png" alt="IOS App Icon"></a>
+                        </div>
+
+
+                        <div class="container" id="side_bar_body">
+                            <h3 id="side_bar_contactus_heading">Contact Us</h3>
+                            <ul>
+                                <a><i class="fas fa-phone-square-alt"></i>+92 344 4888 271</a>
+                                <br />
+                                <a><i class="fas fa-mail-bulk"></i>contact@foodforthought.com</a>
+                                <br />
+                                <a><i class="fas fa-address-card"></i>University Of Sialkot, Pakistan</a>
+                            </ul>
+                        </div>
+
                     </div>
-            <i class="fas fa-align-justify" id="mobile_menu" onclick="OpensideBar_mobile()"></i>
-            
-                 </div>
-            </ul>
+
+                    <i class="fas fa-align-justify" id="mobile_menu_Icon" onclick="OpensideBar()"></i>
+                </ul>
 
 
+                *@ 
+                
                 <ul class="navbar-nav ml-auto mb-2" id="open-sidebar">
                     
                     <div class="sidenav" id="Open_side_bar_menu">

@@ -8,7 +8,17 @@ $(window).scroll(function () {
     $('nav').toggleClass('scrolled', $(this).scrollTop() > 200);
 });
 
+// Mobile Menu
+function OpensideBar_mobile() {
+    document.getElementById("Open_side_bar_menu").style.width = "350px";
+}
 
+function ClosesideBar_mobile() {
+    document.getElementById("Open_side_bar_menu").style.width = "0";
+}
+
+
+// side scroll Menu bar
 function OpensideBar() {
     document.getElementById("Open_side_bar_menu").style.width = "350px";
 }
