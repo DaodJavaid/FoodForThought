@@ -1185,23 +1185,9 @@ body {
     #open-sidebar {
         display: none;
     }
+    /*open-sidebar*/
 
-    #desktop_Menu
-    {
-        display:none;
-    }
 
-    #mobile_menu {
-        color: white;
-        padding: 5px;
-        border: solid;
-        margin-right: 40px;
-    }
-
-    
-    .sidenav {
-        text-align: center;
-    }
     /*full panding home page second section*/
     #second_home_section {
         padding: 10px;
