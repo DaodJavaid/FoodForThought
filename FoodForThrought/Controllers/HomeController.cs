@@ -2,7 +2,9 @@
 using FoodForThrought.Migrations;
 using FoodForThrought.Models;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System.Diagnostics;
+using System.Net.Mail;
 
 namespace FoodForThrought.Controllers
 {
@@ -12,10 +14,14 @@ namespace FoodForThrought.Controllers
 
         public readonly RegisterDbcontext _registerDbcontext;
 
-        public HomeController(ILogger<HomeController> logger, RegisterDbcontext registerDbcontext)
+        public readonly ContactDbcontext _contactDbcontext;
+
+        public HomeController(ILogger<HomeController> logger,
+               RegisterDbcontext registerDbcontext, ContactDbcontext contactDbcontext)
         {
             _logger = logger;
             _registerDbcontext = registerDbcontext;
+            _contactDbcontext =  contactDbcontext;
         }
 
         public IActionResult Home()
@@ -55,12 +61,56 @@ namespace FoodForThrought.Controllers
 
         public IActionResult Contact_us_form(ContactUsForm contactus)
         {
+
+            try
+            {
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com");
+                    client.Authenticate("19101001-033@uskt.edu.pk", "hpfrbrdybyaasale");
+
+                    String System_message = "Thank you for reaching out to Food For Tought! Be" +
+                        " assured, you are in good hands and we are working hard to support you " +
+                        "in the best way. It usually takes us about 12 hours to respond but we" +
+                        " will do our best to get back to you sooner. We will be in touch with " +
+                        "you ASAP, The Food For Tought!";
+
+                    var bodyBuilder = new BodyBuilder
+                    {
+                        HtmlBody = $"<p>{System_message}</p> <p>{contactus.user_message}</p>",
+                        TextBody = System_message + " \r\n {contactus.user_message}"
+                    };
+
+                    var messege = new MimeMessage
+                    {
+                        Body = bodyBuilder.ToMessageBody()
+                    };
+                    messege.From.Add(new MailboxAddress("Food For Tought", "19101001-033@uskt.edu.pk"));
+                    messege.To.Add(new MailboxAddress(contactus.user_name, contactus.user_email));
+                    messege.Subject = "Food For Tought Support Team (Food For Tought Customer Support)";
+                    client.Send(messege);
+
+                    client.Disconnect(true);
+
+                    TempData["confirm"] = "Done";
+                }
+            }
+            catch (SmtpFailedRecipientException ex)
+            {
+               
+                TempData["confirm"] = "Not";
+            }
+
+            if(TempData["confirm"] == "Done")
+            {
+
+
             if (ModelState.IsValid)
             {
                    try
                     {
-                        _registerDbcontext.Add(contactus);
-                        _registerDbcontext.SaveChanges();
+                        _contactDbcontext.Add(contactus);
+                        _contactDbcontext.SaveChanges();
                         TempData["confirm"] = "Message Send Successfully";
                     }
                     catch (Exception ex)
@@ -68,6 +118,12 @@ namespace FoodForThrought.Controllers
                         TempData["confirm"] = "Message Didn't Send Successfully";
 
                     }            
+            }
+
+            }
+            else
+            {
+                TempData["confirm"] = "Message Didn't Send Successfully";
             }
 
             return RedirectToAction("Contact");
