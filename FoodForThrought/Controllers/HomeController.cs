@@ -1,4 +1,5 @@
 ﻿using FoodForThrought.Data;
+using FoodForThrought.Migrations;
 using FoodForThrought.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -52,7 +53,25 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
+        public IActionResult Contact_us_form(ContactUsForm contactus)
+        {
+            if (ModelState.IsValid)
+            {
+                   try
+                    {
+                        _registerDbcontext.Add(contactus);
+                        _registerDbcontext.SaveChanges();
+                        TempData["confirm"] = "Message Send Successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["confirm"] = "Message Didn't Send Successfully";
 
+                    }            
+            }
+
+            return RedirectToAction("Contact");
+        }
 
         [HttpPost]
         public IActionResult Register_user(Register register)
@@ -74,7 +93,6 @@ namespace FoodForThrought.Controllers
                     }
                 }
             }
-
 
 
             if (ModelState.IsValid)

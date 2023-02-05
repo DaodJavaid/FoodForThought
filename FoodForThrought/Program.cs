@@ -12,8 +12,8 @@ var connectionstring = builder.Configuration.GetConnectionString("dbConnection")
 builder.Services.AddDbContext<RegisterDbcontext>(options =>
 options.UseSqlServer(connectionstring));
 
-// this Line Product Data
-builder.Services.AddDbContext<ImageDbcontext>(options =>
+// this Line Message Database
+builder.Services.AddDbContext<ContactDbcontext>(options =>
 options.UseSqlServer(connectionstring));
 
 
