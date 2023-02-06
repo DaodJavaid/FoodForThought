@@ -8,9 +8,15 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\About\NewFolder\" />
+    <Folder Include="wwwroot\images\Product_image\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
     <PackageReference Include="MailKit" Version="3.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />

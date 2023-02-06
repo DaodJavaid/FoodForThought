@@ -16,7 +16,9 @@ options.UseSqlServer(connectionstring));
 builder.Services.AddDbContext<ContactDbcontext>(options =>
 options.UseSqlServer(connectionstring));
 
-
+// this Line Product Database
+builder.Services.AddDbContext<ProductimageDbcontext>(options =>
+options.UseSqlServer(connectionstring));
 
 var app = builder.Build();
 
