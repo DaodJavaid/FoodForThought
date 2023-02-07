@@ -24,13 +24,12 @@
     --bs-gutter-x: 0rem;
 }
 
-.bg-white
+.header
 {
-    background: transparent !important;
-    transition: 0.5s;
+    padding-bottom: 130px;
 }
 
-.fixed-top.scrolled {
+.fixed-top {
     background: #252525 !important;
     box-shadow: #000000 5px;
 }
@@ -1270,3 +1269,7 @@ body {
     width: 100%;
     height: auto;
 }
+
+
+
+

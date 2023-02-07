@@ -9,10 +9,8 @@ namespace FoodForThrought.Models
         public string product_title { get; set; }
         public string product_desription { get; set; }
         public string product_img { get; set; }
-        
+        public string product_image_name { get; set; }
         [NotMapped]
         public IFormFile product_img_NotMapped { get; set; }
-
-
     }
 }

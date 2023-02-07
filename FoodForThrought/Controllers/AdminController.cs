@@ -31,7 +31,12 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
+        public IActionResult AdminDeshboard()
+        {
+            return View();
+        }
 
+        // Add Product In database
         [HttpPost]
         public IActionResult ReadImageFile(AddingProductModel product)
         {
@@ -40,7 +45,7 @@ namespace FoodForThrought.Controllers
             if(product.product_img_NotMapped != null)
             {
                 string ImageUploadFolder = Path.Combine
-                    (_webHostEnvironment.WebRootPath, "Product_image");
+                    (_webHostEnvironment.WebRootPath, "images/Product_image");
 
                 uniqueFileName = Guid.NewGuid().ToString() + "_" +
                     product.product_img_NotMapped.FileName;
@@ -60,15 +65,18 @@ namespace FoodForThrought.Controllers
                }
 
                 product.product_img = "~/wwwroot/images/Product_image";
-                product.product_title = uniqueFileName;
+                product.product_image_name = uniqueFileName;
 
                 _imageDbcontext.Add(product);
                 _imageDbcontext.SaveChanges();
 
-                TempData["confirm"] = "Message Didn't Send Successfully";
+                TempData["confirm"] = "Product Add Successfully ";
 
             }
-
+            else
+            {
+                TempData["confirm"] = "Product Did Not Add Successfully ";
+            }
             return RedirectToAction("AddProduct");
         }
     }

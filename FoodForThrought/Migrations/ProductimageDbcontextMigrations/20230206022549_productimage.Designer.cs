@@ -3,6 +3,7 @@ using FoodForThrought.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodForThrought.Migrations.ProductimageDbcontextMigrations
 {
     [DbContext(typeof(ProductimageDbcontext))]
-    partial class ProductimageDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20230206022549_productimage")]
+    partial class productimage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
