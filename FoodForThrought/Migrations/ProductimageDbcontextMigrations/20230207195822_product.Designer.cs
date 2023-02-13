@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodForThrought.Migrations.ProductimageDbcontextMigrations
 {
     [DbContext(typeof(ProductimageDbcontext))]
-    [Migration("20230206022549_productimage")]
-    partial class productimage
+    [Migration("20230207195822_product")]
+    partial class product
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,8 +26,11 @@ namespace FoodForThrought.Migrations.ProductimageDbcontextMigrations
 
             modelBuilder.Entity("FoodForThrought.Models.AddingProductModel", b =>
                 {
-                    b.Property<string>("product_title")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("product_desription")
                         .IsRequired()
@@ -41,9 +44,13 @@ namespace FoodForThrought.Migrations.ProductimageDbcontextMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("product_title");
+                    b.Property<string>("product_title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("ProductImages");
+                    b.HasKey("Id");
+
+                    b.ToTable("AddingProduct");
                 });
 #pragma warning restore 612, 618
         }

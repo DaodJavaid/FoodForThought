@@ -161,7 +161,7 @@ namespace FoodForThrought.Controllers
                         _registerDbcontext.SaveChanges();
                         TempData["confirm"] = "Signup Successfully";
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         TempData["confirm"] = "There is Some Error. user Not register";
 

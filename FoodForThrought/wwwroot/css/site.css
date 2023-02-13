@@ -9,6 +9,11 @@
     color: white;
 }
 
+#Search_button_product {
+    margin-top: -26px;
+    margin-left: 10px;
+}
+
 .pb-3 {
     padding-bottom: 0rem !important;
 }

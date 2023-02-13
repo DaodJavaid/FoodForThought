@@ -9,6 +9,6 @@ namespace FoodForThrought.Data
         
 
         }
-        public DbSet<AddingProductModel> ProductImages { get; set; }
+        public DbSet<AddingProductModel> AddingProduct { get; set; }
     }
 }
