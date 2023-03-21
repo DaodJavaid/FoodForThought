@@ -1,10 +1,19 @@
 using FoodForThrought.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Authentication Code
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option => {
+        option.LoginPath = "/Admin/AdminLogin";
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 
 var connectionstring = builder.Configuration.GetConnectionString("dbConnection");
 
@@ -30,6 +39,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

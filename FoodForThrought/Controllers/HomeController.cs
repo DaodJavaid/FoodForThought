@@ -1,5 +1,4 @@
 ﻿using FoodForThrought.Data;
-using FoodForThrought.Migrations;
 using FoodForThrought.Models;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;

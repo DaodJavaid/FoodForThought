@@ -2,12 +2,14 @@
 using FoodForThrought.Migrations.ProductimageDbcontextMigrations;
 using FoodForThrought.Models;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Utilities;
 using System.IO;
 
 namespace FoodForThrought.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         public readonly ProductimageDbcontext _imageDbcontext;

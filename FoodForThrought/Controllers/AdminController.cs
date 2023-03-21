@@ -1,21 +1,11 @@
-﻿using FoodForThrought.Data;
-using FoodForThrought.Migrations;
-using FoodForThrought.Models;
-using Grpc.Core;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Net;
-using System.Web;
-using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using FoodForThrought.Models.Admin;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using FoodForThrought.Models;
 
 namespace FoodForThrought.Controllers
 {
@@ -24,23 +14,11 @@ namespace FoodForThrought.Controllers
         [Authorize]
         public IActionResult AdminDeshboard()
         {
-            if (User.Identity.IsAuthenticated)
+            ClaimsPrincipal claimUser = HttpContext.User;
+
+            if(!claimUser.Identity.IsAuthenticated)
             {
-                ViewBag.HideMenuBar = true;
-
-                // Get the user's email address
-                string email = User.Identity.Name;
-
-                // Get the user's roles
-                var roles = ((ClaimsIdentity)User.Identity).Claims
-                            .Where(c => c.Type == ClaimTypes.Role)
-                            .Select(c => c.Value);
                 // User is authorized to access this action
-                return RedirectToAction("AdminDeshboard", "Admin");
-            }
-            else
-            {
-                // User is not authorized to access this action, redirect to error page or login page
                 return RedirectToAction("AdminLogin", "Admin");
             }
 
@@ -49,14 +27,35 @@ namespace FoodForThrought.Controllers
 
         public IActionResult AdminLogin()
         {
-            return View();
+           return View();
         }
 
-
-        public IActionResult AdminLogincheck(AdminLogin logindata)
+        [HttpPost]
+        public async Task<IActionResult> AdminLogincheck(AdminLogin logindata)
         {
             if(logindata.email == "123@123" && logindata.Password == "123")
             {
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.NameIdentifier, logindata.email),
+                    new Claim("OtherProperties", "admin"),
+                };
+
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+                AuthenticationProperties properties = new AuthenticationProperties() {
+                
+                    AllowRefresh= true,
+                    IsPersistent= true,
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity), properties);
+
+
+                // User is authorized to access this action
                 return RedirectToAction("AdminDeshboard", "Admin");
             }
             else
@@ -64,8 +63,14 @@ namespace FoodForThrought.Controllers
                 return RedirectToAction("AdminLogin", "Admin");
             }
 
-
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Home", "Home");
         }
     }
 }
