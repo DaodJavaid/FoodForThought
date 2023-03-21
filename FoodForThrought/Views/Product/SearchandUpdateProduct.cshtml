@@ -1,117 +1,16 @@
 ﻿@model IEnumerable<FoodForThrought.Models.AddingProductModel>
-
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".header").hide();
+        });
+    </script>
+}
 
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu">
-
-        <div data-simplebar class="h-100">
-
-            <div class="navbar-brand-box">
-                <a href="index.html" class="logo">
-                    <img src="assets/images/logo-dark.png" />
-                </a>
-            </div>
-
-            <!--- Sidemenu -->
-            <div id="sidebar-menu">
-                <!-- Left Menu Start -->
-                <ul class="metismenu list-unstyled" id="side-menu">
-                    <li class="menu-title">Menu</li>
-
-                    <li>
-                        <a href="index.html" class="waves-effect"><i class='bx bx-home-smile'></i><span class="badge badge-pill badge-primary float-right">3</span><span>Dashboard</span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="has-arrow waves-effect"><i class="fas fa-user"></i><span>User</span></a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="UserProfile.html">Add User</a></li>
-                            <li><a href="ui-cards.html">Update User</a></li>
-                            <li><a href="ui-carousel.html">Delete User</a>
-                            <li><a href="ui-embeds.html">View All User</a>
-                            <li><a href="ui-general.html">Search User</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="has-arrow waves-effect"><i class="fas fa-folder-open"></i><span>Product</span></a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="ui-buttons.html">Add Product</a></li>
-                            <li><a href="ui-cards.html">Update Product</a></li>
-                            <li><a href="ui-carousel.html">Delete Product</a>
-                            <li><a href="ui-embeds.html">View All Product</a>
-                            <li><a href="ui-general.html">Search Product</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a href="#" class="has-arrow waves-effect"><i class="fas fa-question"></i><span>Question</span></a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="ui-buttons.html">Add Question</a></li>
-                            <li><a href="ui-cards.html">Update Question</a></li>
-                            <li><a href="ui-carousel.html">Delete Question</a>
-                            <li><a href="ui-embeds.html">View All Question</a>
-                            <li><a href="ui-general.html">Search Question</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="menu-title">More</li>
-
-
-                    <li><a href="calendar.html" class=" waves-effect"><i class="fas fa-user"></i><span>Profile</span></a></li>
-
-                    <li><a href="calendar.html" class=" waves-effect"><i class="fas fa-lock"></i><span>Logout</span></a></li>
-
-                </ul>
-            </div>
-            <!-- Sidebar -->
-        </div>
-    </div>
-    <!-- Left Sidebar End -->
-
-    <header id="page-topbar">
-        <div class="navbar-header">
-
-            <div class="d-flex align-items-left">
-                <button type="button" class="btn btn-sm mr-2 d-lg-none px-3 font-size-16 header-item waves-effect"
-                        id="vertical-menu-btn">
-                    <i class="fa fa-fw fa-bars"></i>
-                </button>
-            </div>
-
-            <div class="d-flex align-items-center">
-                <div class="dropdown d-inline-block">
-                    <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
-                             alt="Header Avatar">
-                        <span class="d-none d-sm-inline-block ml-1">Jamie D.</span>
-                        <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                           href="javascript:void(0)">
-                            <span>Profile</span>
-                            <span>
-                                <span class="badge badge-pill badge-soft-danger">1</span>
-                            </span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                           href="javascript:void(0)">
-                            <span>Log Out</span>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </header>
-
+    @Html.Partial("_VerticalMenu")
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
