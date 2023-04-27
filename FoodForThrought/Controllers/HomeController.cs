@@ -1,9 +1,14 @@
 ﻿using FoodForThrought.Data;
 using FoodForThrought.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System.Diagnostics;
 using System.Net.Mail;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FoodForThrought.Controllers
 {
@@ -15,12 +20,17 @@ namespace FoodForThrought.Controllers
 
         public readonly ContactDbcontext _contactDbcontext;
 
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
         public HomeController(ILogger<HomeController> logger,
-               RegisterDbcontext registerDbcontext, ContactDbcontext contactDbcontext)
+               RegisterDbcontext registerDbcontext, 
+               ContactDbcontext contactDbcontext,
+               IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _registerDbcontext = registerDbcontext;
             _contactDbcontext =  contactDbcontext;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Home()
@@ -54,6 +64,12 @@ namespace FoodForThrought.Controllers
         }
 
         public IActionResult Register()
+        {
+            return View();
+        }
+
+     //   [Authorize]
+        public IActionResult Detectemotion()
         {
             return View();
         }
@@ -102,8 +118,6 @@ namespace FoodForThrought.Controllers
 
             if(TempData["confirm"] == "Done")
             {
-
-
             if (ModelState.IsValid)
             {
                    try
@@ -149,7 +163,6 @@ namespace FoodForThrought.Controllers
                 }
             }
 
-
             if (ModelState.IsValid)
             {
                 if (register.password == register.confirm_password)
@@ -177,10 +190,8 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("Login");
         }
 
-
-
         [HttpPost]
-        public IActionResult login_user(Login login)
+        public async Task<IActionResult> login_user(Login login)
         {
             var check_registration = _registerDbcontext.Signup.ToList();
 
@@ -194,6 +205,26 @@ namespace FoodForThrought.Controllers
 
                     if(login.email == mail && login.Password == pass)
                     {
+                        List<Claim> claims = new List<Claim>()
+                             {
+                              new Claim(ClaimTypes.NameIdentifier, login.email),
+                              new Claim("OtherProperties", "admin"),
+                             };
+
+                        ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+                        AuthenticationProperties properties = new AuthenticationProperties()
+                        {
+
+                            AllowRefresh = true,
+                            IsPersistent = true,
+                        };
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity), properties);
+
                         TempData["confirm"] = "Login Successfully";
                         break;
                     }
@@ -204,9 +235,49 @@ namespace FoodForThrought.Controllers
                 }
             }
 
-
             return RedirectToAction("Home");
         }
+
+
+        [HttpPost]
+        public ActionResult SaveImage(string imageData)
+        {
+            try
+            {
+
+                byte[] bytes = Convert.FromBase64String(imageData.Replace("data:image/png;base64,", ""));
+                string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                string fileName = Guid.NewGuid().ToString() + ".png";
+                string filePath = Path.Combine(folderPath, fileName);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                System.IO.File.WriteAllBytes(filePath, bytes);
+                // Wait for 1 second
+                Thread.Sleep(10000); // 10000 milliseconds = 10 second
+
+                // Deleting the folder after detect emotion
+                string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                DirectoryInfo di = new DirectoryInfo(folderPath1);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+
+                return Json(new { success = true, message = "Image saved successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

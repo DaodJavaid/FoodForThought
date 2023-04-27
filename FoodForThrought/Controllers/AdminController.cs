@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using FoodForThrought.Models.Admin;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using FoodForThrought.Models;
 
 namespace FoodForThrought.Controllers
 {
@@ -19,7 +17,7 @@ namespace FoodForThrought.Controllers
             if(!claimUser.Identity.IsAuthenticated)
             {
                 // User is authorized to access this action
-                return RedirectToAction("AdminLogin", "Admin");
+                return RedirectToAction("Login", "Home");
             }
 
             return View();
@@ -54,13 +52,12 @@ namespace FoodForThrought.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity), properties);
 
-
                 // User is authorized to access this action
                 return RedirectToAction("AdminDeshboard", "Admin");
             }
             else
             {
-                return RedirectToAction("AdminLogin", "Admin");
+                return RedirectToAction("Login", "Home");
             }
 
             return View();

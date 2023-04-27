@@ -307,7 +307,7 @@ body {
     }
 
 .form-control {
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
 }
 
@@ -834,6 +834,11 @@ body {
         border-radius: 100%;
     }
 
+.nav-link
+{
+  padding: 0rem 0rem;
+}
+
 
 
 /***************************    Catalouge    ****************************/
@@ -1277,4 +1282,37 @@ body {
 
 
 
+/*********************** Catalouge PopUp ************************/
 
+#catalouge_two_button
+{
+    margin: 5px;
+}
+
+#back_card
+{
+    height: 900px;
+}
+
+
+/*********************** Emotion detection page************************/
+
+#emotiondetection 
+{
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
+
+#detectionheading 
+{
+    text-align: center;
+}
+
+#cameraPreview, #capturedImage {
+    border: 1px solid black;
+}
+
+#emotionbutton {
+    text-align: center;
+    margin-top: 30px;
+}

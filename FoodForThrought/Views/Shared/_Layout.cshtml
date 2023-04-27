@@ -20,7 +20,8 @@
     @* Icon Link *@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type='text/css'>
-
+    
+    
     <!-- Bootstrap App css -->
      <link rel="stylesheet" href="~/Bootstrap File/bootstrap.min.css" asp-append-version="true" />
     
@@ -41,7 +42,7 @@
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Catalogue">Catalogue</a>
+                        <a class="nav-link text-white" href="#" onclick="selectcatalouge()">Catalogue</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
@@ -50,16 +51,28 @@
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
                     </li>
 
+                   
 
                     @* Register Icon and Pages *@
                     <div class="dropdown">
                         <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Account
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
-                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Deshboard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Profile</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="LogOut">Logout</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
+                            </div>
+                        }
                     </div>
                  </ul>
 
@@ -172,19 +185,16 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">Useful Links</h5>
                     <p id="subtext_footer">
-                        <a href="#" class="text-white" style="text-decoration: none;">Home</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                     </p>
                      <p id="subtext_footer">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Catalogue">Catalogue</a>
                     </p>
                     <p id="subtext_footer">
-                        <a href="#" class="text-white" style="text-decoration: none;">Contact</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </p>
                     <p id="subtext_footer">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                    </p>
-                    <p id="subtext_footer">
-                        <a href="#" class="text-white" style="text-decoration: none;">My Acount</a>
                     </p>
                 </div>
 
@@ -280,7 +290,29 @@
 </div>
 
 
+<!--   Catalouge Popup     -->
 
+
+    <div id="popup" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Choose Catalouge</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="container d-flex justify-content-center modal-body">
+                    <a id="catalouge_two_button" class="btn btn-primary" asp-controller="Home" asp-action="Detectemotion" role="button">Get Food On Emotion</a>
+                    <a id="catalouge_two_button" class="btn btn-primary" asp-controller="Home" asp-action="Catalogue" role="button">Select Food By Him Self</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
 
     <!-- jQuery  -->
     <script src="/js/jquery.min.js"></script>

@@ -6,25 +6,131 @@
 
 
 
-<div class="container">
-    <div class="row">
-        <h1 class="heading">Detect Emotion Now</h1>
-    </div>
-    <div class="row">
-        <div class="col-6" id="main_video_section">
-            <video id="video" width="640" height="480" autoplay></video>
-        </div>
-        <div class="col-6" id="main_video_section">
-            <canvas id="canvas" width="640" height="480"></canvas>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <button id="snap" onclick="OpenCamera()">Snap Photo</button>
-        </div>
 
-        <div class="col-2">
-            <button id="Stop" onclick="StopCamera()">Stop Photo</button>
+<div class="container" id="emotiondetection">
+    <div class="row">
+        <div class="col col-lg-6" id="detectionheading" >
+           <h1>Capturing Image</h1>
+        </div>
+        <div class="col" id="detectionheading">
+            <h1>Image</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-6" id="detectionheading">
+            <video id="cameraPreview" width="540" height="350" autoplay></video>
+        </div>
+        <div class="col col-lg-6" id="detectionheading">
+            @*  <canvas id="capturedImage" width="540" height="350"></canvas>*@
+            <img id="capturedImagePreview" width="540" height="350">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+           
+        </div>
+        <div class="col" id="emotionbutton" >
+            <button class="btn btn__primary btn__hover2" id="openCameraButton" >Open Camera</button>
+            <button class="btn btn__primary btn__hover2" id="captureImageButton" disabled>Capture Image</button>
+            <button class="btn btn__primary btn__hover2" id="stopCameraButton" disabled>Stop Camera</button>
+          
+        </div>
+        <div class="col">
+           
         </div>
     </div>
 </div>
+
+@******** Processign popup *********@
+
+<div id="processingModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please wait while we detect your emotion...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@******** Processign popup *********@
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+<script>
+    var myBtn = document.getElementById("captureImageButton");
+    myBtn.addEventListener("click", function () {
+        var processingModal = new bootstrap.Modal(document.getElementById("processingModal"));
+        processingModal.show();
+
+        // Replace this with your processing logic
+        setTimeout(function () {
+            var processingModal = bootstrap.Modal.getInstance(document.getElementById("processingModal"));
+            processingModal.hide();
+        }, 3000); // Replace 3000 with the time needed to complete the processing
+    });
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var cameraStream = null;
+    var cameraPreview = document.getElementById('cameraPreview');
+    var capturedImagePreview = document.getElementById('capturedImagePreview');
+
+    $('#openCameraButton').click(function () {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    cameraStream = stream;
+                    cameraPreview.srcObject = cameraStream;
+                    $('#stopCameraButton').prop('disabled', false);
+                    $('#captureImageButton').prop('disabled', false);
+                    console.log('Camera access granted');
+                })
+                .catch(function (error) {
+                    console.error('Camera access denied', error);
+                });
+        } else {
+            console.error('getUserMedia is not supported');
+        }
+    });
+
+    $('#stopCameraButton').click(function () {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+            cameraStream = null;
+            cameraPreview.srcObject = null;
+            $('#stopCameraButton').prop('disabled', true);
+            $('#captureImageButton').prop('disabled', true);
+        }
+    });
+
+    $('#captureImageButton').click(function () {
+        if (cameraStream) {
+            var canvas = document.createElement('canvas');
+            canvas.width = cameraPreview.videoWidth;
+            canvas.height = cameraPreview.videoHeight;
+            var context = canvas.getContext('2d');
+            context.drawImage(cameraPreview, 0, 0, cameraPreview.videoWidth, cameraPreview.videoHeight);
+            var imageData = canvas.toDataURL();
+            capturedImagePreview.src = imageData;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveImage", "Home")",
+                data: {
+                    imageData: imageData
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    });
+</script>

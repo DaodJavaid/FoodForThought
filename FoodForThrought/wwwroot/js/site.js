@@ -66,3 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+/*============ Catalouge Button pop up=============== */
+
+function selectcatalouge() {
+    var popup = new bootstrap.Modal(document.getElementById("popup"));
+    popup.show();
+}
+
+
+

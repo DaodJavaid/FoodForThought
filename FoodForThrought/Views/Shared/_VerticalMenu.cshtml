@@ -6,8 +6,8 @@
     <div data-simplebar class="h-100">
 
         <div class="navbar-brand-box">
-            <a href="index.html" class="logo">
-                <img src="assets/images/logo-dark.png" />
+            <a asp-controller="Home" asp-action="Home" class="logo" >
+                <img id="vertical_logo" src="/images/Logo/LOGO.png" />
             </a>
         </div>
 
@@ -24,11 +24,11 @@
                 <li>
                     <a href="#" class="has-arrow waves-effect"><i class="fas fa-user"></i><span>User</span></a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="UserProfile.html">Add User</a></li>
-                        <li><a href="ui-cards.html">Update User</a></li>
-                        <li><a href="ui-carousel.html">Delete User</a>
-                        <li><a href="ui-embeds.html">View All User</a>
-                        <li><a href="ui-general.html">Search User</a></li>
+                        <li><a class="nav-link " asp-area="" asp-controller="User" asp-action="AddUser">Add User</a></li>
+                        <li><a class="nav-link " asp-area="" asp-controller="User" asp-action="UpdateUser">Update User</a></li>
+                        <li><a class="nav-link " asp-area="" asp-controller="User" asp-action="DeleteUser">Delete User</a>
+                        <li><a class="nav-link " asp-area="" asp-controller="User" asp-action="ViewAllUser">View All User</a>
+                        <li><a class="nav-link " asp-area="" asp-controller="User" asp-action="SearchUser">Search User</a></li>
                     </ul>
                 </li>
 
