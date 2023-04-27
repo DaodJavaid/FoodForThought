@@ -9,17 +9,17 @@ namespace FoodForThrought.Controllers
 {
     public class AdminController : Controller
     {
-        [Authorize]
+       // [Authorize]
         public IActionResult AdminDeshboard()
         {
-            ClaimsPrincipal claimUser = HttpContext.User;
+           /* ClaimsPrincipal claimUser = HttpContext.User;
 
             if(!claimUser.Identity.IsAuthenticated)
             {
                 // User is authorized to access this action
                 return RedirectToAction("Login", "Home");
             }
-
+           */
             return View();
         }
 

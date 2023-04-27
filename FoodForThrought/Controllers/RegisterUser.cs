@@ -2,25 +2,25 @@
 
 namespace FoodForThrought.Controllers
 {
-    public class User : Controller
+    public class RegisterUser : Controller
     {
-        public IActionResult AddUser()
+        public IActionResult AddRegisterUser()
         {
             return View();
         }
-        public IActionResult UpdateUser()
+        public IActionResult UpdateRegisterUser()
         {
             return View();
         }
-        public IActionResult DeleteUser()
+        public IActionResult DeleteRegisterUser()
         {
             return View();
         }
-        public IActionResult ViewAllUser()
+        public IActionResult ViewAllRegisterUser()
         {
             return View();
         }
-        public IActionResult SearchUser()
+        public IActionResult SearchRegisterUser()
         {
             return View();
         }

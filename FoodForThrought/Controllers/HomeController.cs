@@ -74,6 +74,14 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
+//[Authorize]
+        public IActionResult Questions()
+        {
+            return View();
+        }
+
+
+
         public IActionResult Contact_us_form(ContactUsForm contactus)
         {
 
@@ -240,7 +248,7 @@ namespace FoodForThrought.Controllers
 
 
         [HttpPost]
-        public ActionResult SaveImage(string imageData)
+        public IActionResult SaveImage(string imageData)
         {
             try
             {
@@ -267,13 +275,13 @@ namespace FoodForThrought.Controllers
                     file.Delete();
                 }
 
-                return Json(new { success = true, message = "Image saved successfully" });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
 
+            return RedirectToAction("Register");
         }
 
 

@@ -1,0 +1,42 @@
+﻿@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".header").hide();
+            $("#footer").hide();
+        });
+    </script>
+}
+
+<div class="container-fluid" id="main_heading_deshboard">
+<div id="layout-wrapper">
+
+        @Html.Partial("_UserVerticalMenu")
+   
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <h1 class="text-center">Welcome to Food For Throught</h1>
+                            <a asp-controller="Home" asp-action="Home">
+                                <img id="userpanallogo" src="/images/Logo/LOGO.png" />
+                            </a>
+                        </div>
+                    </div>
+
+            </div> <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+    </div>
+    <!-- end main content-->
+
+</div>
+</div>
+<!-- END layout-wrapper -->
+<!-- Overlay-->
+<div class="menu-overlay"></div>
