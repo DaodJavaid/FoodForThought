@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodForThrought.Migrations.ProductimageDbcontextMigrations
 {
     [DbContext(typeof(ProductimageDbcontext))]
-    [Migration("20230207195822_product")]
-    partial class product
+    [Migration("20230430130921_Product")]
+    partial class Product
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "8.0.0-preview.3.23174.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

@@ -29,12 +29,14 @@ options.UseSqlServer(connectionstring));
 builder.Services.AddDbContext<ProductimageDbcontext>(options =>
 options.UseSqlServer(connectionstring));
 
-
-/* this Line Newsletter Database */
+/* this Line AdminRegister Database */
 builder.Services.AddDbContext<AdminDbContext>(options =>
 options.UseSqlServer(connectionstring));
 
-
+/* this Line Questions Database 
+builder.Services.AddDbContext<QuestionDbContext>(options =>
+options.UseSqlServer(connectionstring));
+*/
 
 var app = builder.Build();
 

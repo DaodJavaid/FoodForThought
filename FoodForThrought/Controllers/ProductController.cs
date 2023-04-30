@@ -1,5 +1,4 @@
 ﻿using FoodForThrought.Data;
-using FoodForThrought.Migrations.ProductimageDbcontextMigrations;
 using FoodForThrought.Models;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +39,9 @@ namespace FoodForThrought.Controllers
         
         public IActionResult DeleteProduct()
         {
-            return View();
+            var foods = _displayProductnow.AddingProduct.ToList();
+
+            return View(foods);
         }
         public IActionResult SearchandUpdateProduct()
         {
@@ -102,52 +103,7 @@ namespace FoodForThrought.Controllers
 
         [HttpPost]
         public IActionResult UpdateProduct(AddingProductModel updateproduct)
-        {/*
-
-            string uniqueFileName = null;
-            byte[] bytes = null;
-
-            if (updateproduct.product_img_NotMapped != null)
-            {
-                  string ImageUploadFolder = Path.Combine
-                      (_webHostEnvironment.WebRootPath, "images/Product_image");
-
-                  uniqueFileName = Guid.NewGuid().ToString() + "_" +
-                      product.product_img_NotMapped.FileName;
-
-                    string filepath = Path.Combine(ImageUploadFolder, uniqueFileName);
-
-                  string fileDirectory = Path.GetDirectoryName(filepath);
-                   if (!Directory.Exists(fileDirectory))
-                   {
-                       Directory.CreateDirectory(fileDirectory);
-                   }
-                   
-
-                using (Stream fileStream = updateproduct.product_img_NotMapped.OpenReadStream())
-                {
-                    using (BinaryReader br = new BinaryReader(fileStream))
-                    {
-                        bytes = br.ReadBytes((Int32)fileStream.Length);
-                    }
-
-                }
-
-                updateproduct.product_img = Convert.ToBase64String(bytes,0,bytes.Length);
-
-                _updateProductnow.Add(updateproduct);
-                _updateProductnow.SaveChanges();
-
-                TempData["confirm"] = "Product Add Successfully ";
-
-            }
-            else
-            {
-                TempData["confirm"] = "Product Did Not Add Successfully ";
-            }
-                */
-
-
+        {
 
             return RedirectToAction("AddProduct");
         }

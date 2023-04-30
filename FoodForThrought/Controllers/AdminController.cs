@@ -14,9 +14,19 @@ namespace FoodForThrought.Controllers
 
         public readonly AdminDbContext _adminDbContext;
 
-        public AdminController(AdminDbContext adminDbContext)
+        // Check how manay User Register
+        public readonly RegisterDbcontext _registerDbcontext;
+
+        // Check how manay Product Add in database
+        public readonly ProductimageDbcontext _displayProductnow;
+
+        public AdminController(AdminDbContext adminDbContext,
+               RegisterDbcontext registerDbcontext,
+               ProductimageDbcontext displayProductnow)
         {
             _adminDbContext = adminDbContext;
+            _registerDbcontext = registerDbcontext;
+            _displayProductnow = displayProductnow;
         }
 
 
@@ -30,7 +40,15 @@ namespace FoodForThrought.Controllers
                 // User is authorized to access this action
                 return RedirectToAction("AdminLogin", "Admin");
             }
-           
+
+            // Check how manay User Register
+            int Usercount = _registerDbcontext.Signup.Count();
+            ViewBag.Usercount = Usercount;
+
+            // Check how manay Product Add in database
+            int Productcount = _displayProductnow.AddingProduct.Count();
+            ViewBag.Productcount = Productcount;
+
             return View();
         }
 

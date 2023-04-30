@@ -1,4 +1,6 @@
-﻿@section Scripts {
+﻿@model IEnumerable<FoodForThrought.Models.AddingProductModel>
+
+@section Scripts {
     <script>
         $(document).ready(function () {
             $(".header").hide();
@@ -6,3 +8,135 @@
         });
     </script>
 }
+
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    @Html.Partial("_VerticalMenu")
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0 font-size-18">Delete Product</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Food For Thought</a></li>
+                                    <li class="breadcrumb-item active">Delete Product</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <!-- Search Product -->
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card card-animate">
+                            <div class="card-body">
+
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Search Product</h4>
+
+                                    <div class="page-title-right">
+
+                                        <form method="post" action="SearchProduct" class="form-inline">
+                                            <div class="form-group">
+                                                <input type="text" name="product_title" class="form-control" id="search_product" placeholder="Enter Product Name Or Id" />
+                                            </div>
+                                            <button type="submit" id="Search_button_product" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="morris-line-example" class="morris-chart" style="height: 320px;">
+
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Id</th>
+                                                        <th>Product Name</th>
+                                                        <th>Product Description</th>
+                                                        <th>Product Image</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var items in Model)
+                                                    {
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayFor(modelItem => items.Id)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => items.product_title)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => items.product_desription)
+                                                            </td>
+                                                            <td>
+                                                                <img src="@Url.Content("~/images/Product_image/" + items.product_image_name)" height="120px" width="120px" alt="Product Image" />
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                    <!-- end row-->
+
+                </div> <!-- container-fluid -->
+                <!-- Update Form -->
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <h4 class="card-title d-inline-block">Update Product</h4>
+
+                                <div id="morris-line-example" class="morris-chart" style="height: 320px;">
+
+                                    <form method="post" action="SearchProduct" id="Register_form" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input type="text" name="product_title" class="form-control" id="inputname1" placeholder="Enter Product Name" />
+                                        </div>
+                                       
+                                        <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Delete Product</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                    <!-- end row-->
+
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+    <!-- Overlay-->
+    <div class="menu-overlay"></div>
+</div>

@@ -81,7 +81,7 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
-
+        [HttpPost]
         public IActionResult Contact_us_form(ContactUsForm contactus)
         {
 
