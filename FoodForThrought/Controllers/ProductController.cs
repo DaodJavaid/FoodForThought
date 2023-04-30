@@ -1,4 +1,5 @@
 ﻿using FoodForThrought.Data;
+using FoodForThrought.Migrations.ProductimageDbcontextMigrations;
 using FoodForThrought.Models;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +20,20 @@ namespace FoodForThrought.Controllers
 
         public readonly ProductimageDbcontext _displayProductnow;
 
+        public readonly ProductimageDbcontext _deleteProductnow;
+
         public readonly IWebHostEnvironment _webHostEnvironment;
 
         public ProductController(ProductimageDbcontext imageDbcontext, ProductimageDbcontext updateProductnow,
                                  ProductimageDbcontext searchProductnow, IWebHostEnvironment webHostEnvironment,
-                                 ProductimageDbcontext displayProductnow)
+                                 ProductimageDbcontext displayProductnow, ProductimageDbcontext deleteProductnow)
         {
             _imageDbcontext = imageDbcontext;
             _updateProductnow = updateProductnow;
             _searchProductnow = searchProductnow;
             _displayProductnow = displayProductnow;
             _webHostEnvironment = webHostEnvironment;
+            _deleteProductnow = deleteProductnow;
         }
 
         public IActionResult AddProduct()
@@ -43,16 +47,18 @@ namespace FoodForThrought.Controllers
 
             return View(foods);
         }
-        public IActionResult SearchandUpdateProduct()
+        public IActionResult SearchandUpdateProduct(AddingProductModel delete)
         {
-          var foods = _displayProductnow.AddingProduct.ToList();
+            var delete_product = _displayProductnow.AddingProduct.ToList();
 
-            return View(foods);
+            return View(delete_product);
 
         }
         public IActionResult ViewAllProduct()
         {
-            return View();
+            var delete_product = _updateProductnow.AddingProduct.ToList();
+
+            return View(delete_product);
         }
 
         // Add Product In database
@@ -100,118 +106,16 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("AddProduct");
         }
 
-
         [HttpPost]
-        public IActionResult UpdateProduct(AddingProductModel updateproduct)
+        public IActionResult SearchProduct(AddingProductModel delete)
         {
+            var delete_product = _updateProductnow.AddingProduct.ToList();
 
-            return RedirectToAction("AddProduct");
-        }
+            DeletingProduct(delete);
 
+            AddProduct(delete);
 
-        [HttpPost]
-        public IActionResult SearchProduct(AddingProductModel Searchproduct)
-        {
-            string f_img_name = "";
-            int f_id = 0;
-
-
-            var Search_product = _searchProductnow.AddingProduct.ToList();
-
-            if(Search_product != null)
-            {
-                foreach(var searchfood in Search_product)
-                {
-                    if(Searchproduct.Id == searchfood.Id)
-                    {
-                        // they save the name of the image file 
-                        f_id = searchfood.Id;
-                        f_img_name = searchfood.product_image_name;
-                    }  
-                    else
-                    {
-                        TempData["confirm"] = "Food not Found";
-                    }                    
-                }
-
-
-                // Delete the image from the Folder and delete the Row From the database
-                string fullPath = Path.Combine
-                    (_webHostEnvironment.WebRootPath, "images/Product_image", f_img_name);
-
-
-                if (System.IO.File.Exists(fullPath))
-                {
-                    System.IO.File.Delete(fullPath);
-
-                    foreach (var searchfood in Search_product)
-                    {
-                        if (Searchproduct.Id == searchfood.Id)
-                        {
-                            _searchProductnow.Remove(searchfood);
-                            _searchProductnow.SaveChanges();
-
-                        }
-                        else
-                        {
-                            TempData["confirm"] = "Food not Found";
-                        }
-                    }
-                }
-                else
-                {
-                    TempData["confirm"] = "Path has No Food";
-                }
-            }
-            else
-            {
-                TempData["confirm"] = "Database has No Food";
-            }
-
-            // they save the name of the image file 
-
-
-            /* string uniqueFileName = null;
-
-             foreach (var searchfood in Search_product)
-             {
-                 if (Searchproduct.Id == searchfood.Id)
-                 {
-                     // Updating the product now
-                     string ImageUploadFolder = Path.Combine
-          (_webHostEnvironment.WebRootPath, "images/Product_image");
-
-                     uniqueFileName = Guid.NewGuid().ToString() + "_" +
-                         Searchproduct.product_img_NotMapped.FileName;
-
-                     string filepath = Path.Combine(ImageUploadFolder, uniqueFileName);
-
-                     string fileDirectory = Path.GetDirectoryName(filepath);
-                     if (!Directory.Exists(fileDirectory))
-                     {
-                         Directory.CreateDirectory(fileDirectory);
-                     }
-
-
-                     using (var fileStream = new FileStream(filepath, FileMode.Create))
-                     {
-                         Searchproduct.product_img_NotMapped.CopyTo(fileStream);
-                     }
-
-                     Searchproduct.product_img = "~/wwwroot/images/Product_image";
-                     Searchproduct.product_image_name = uniqueFileName;
-
-                     _searchProductnow.Add(Searchproduct);
-                     _searchProductnow.SaveChanges();
-
-                     TempData["confirm"] = "Update Product Add Successfully ";
-
-                 }
-                 else
-                 {
-                     TempData["confirm"] = "Food not Found";
-                 }
-             }*/
+            TempData["confirm"] = "Product Update Successfully";
 
             return RedirectToAction("SearchandUpdateProduct");
         }
@@ -282,6 +186,49 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("UpdateProduct");
         }
 
+        [HttpPost]
+        public IActionResult DeletingProduct(AddingProductModel delete)
+        {
 
+            var delete_product = _deleteProductnow.AddingProduct.ToList();
+
+            if (delete_product != null)
+            {
+                foreach (var deletefood in delete_product)
+                {
+                    if (delete.product_title_old == deletefood.product_title)
+                    {
+                        // Delete image file from the server
+                        var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, deletefood.product_img, deletefood.product_image_name);
+
+                        try
+                        {
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception (e.g. log it)
+                            TempData["confirm"] = "Product Deleted have some issue";
+                        }
+                        // Remove product from the database
+                        _deleteProductnow.Remove(deletefood);
+                        _deleteProductnow.SaveChanges();
+
+                        TempData["confirm"] = "Product Deleted Successfully";
+                    }
+                    else
+                    {
+                        TempData["confirm"] = "Product Not Found";
+                    }
+                }
+
+            }
+            return RedirectToAction("DeleteProduct");
+
+
+        }
     }
 }

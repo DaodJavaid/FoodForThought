@@ -10,5 +10,10 @@ namespace FoodForThrought.Data
 
         }
         public DbSet<AddingProductModel> AddingProduct { get; set; }
+
+        internal object Find(string product_title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

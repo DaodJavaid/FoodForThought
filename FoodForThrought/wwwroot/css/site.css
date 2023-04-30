@@ -1323,3 +1323,10 @@ body {
     height: 30%;
     padding: 0px 200px 200px 100px;
 }
+
+/********************Admin Background ************************/
+
+.card,.card-animate
+{
+    padding-bottom: 300px;
+}
