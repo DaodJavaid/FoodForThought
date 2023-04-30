@@ -20,6 +20,7 @@ namespace FoodForThrought.Controllers
 
         public readonly ContactDbcontext _contactDbcontext;
 
+
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public HomeController(ILogger<HomeController> logger,
@@ -79,7 +80,6 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
-
 
 
         public IActionResult Contact_us_form(ContactUsForm contactus)
@@ -151,7 +151,7 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register_user(Register register)
+        public IActionResult Register_user(AdminRegister register)
         {
 
             var check_registration = _registerDbcontext.Signup.ToList();
@@ -199,7 +199,7 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> login_user(Login login)
+        public async Task<IActionResult> login_user(AdminLogin login)
         {
             var check_registration = _registerDbcontext.Signup.ToList();
 
@@ -216,7 +216,7 @@ namespace FoodForThrought.Controllers
                         List<Claim> claims = new List<Claim>()
                              {
                               new Claim(ClaimTypes.NameIdentifier, login.email),
-                              new Claim("OtherProperties", "admin"),
+                              new Claim("OtherProperties", "User"),
                              };
 
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(
@@ -285,7 +285,12 @@ namespace FoodForThrought.Controllers
         }
 
 
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+            return RedirectToAction("Home", "Home");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -61,9 +61,8 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Deshboard</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Profile</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="LogOut">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserDeshboard">Deshboard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a>
                             </div>
                         }
                         else
@@ -201,9 +200,9 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning" id="heading_footer">News Letter</h5>
                     
-                    <form >
+                    <form method="post" action="#">
                         <div class="form-group">
-                           <input style="padding: 7px;" type="email" class="form-control1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <input style="padding: 7px;" name="newsletters" type="email" class="form-control1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                           </div>
                           <input id="newsletter_button" type="submit" class="btn btn-primary text-center" style="margin-top: 10px;">
                     </form>

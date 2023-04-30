@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Authentication Code
+/* Authentication Code*/
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option => {
@@ -28,6 +28,13 @@ options.UseSqlServer(connectionstring));
 // this Line Product Database
 builder.Services.AddDbContext<ProductimageDbcontext>(options =>
 options.UseSqlServer(connectionstring));
+
+
+/* this Line Newsletter Database */
+builder.Services.AddDbContext<AdminDbContext>(options =>
+options.UseSqlServer(connectionstring));
+
+
 
 var app = builder.Build();
 

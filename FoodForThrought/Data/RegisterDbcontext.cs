@@ -10,6 +10,6 @@ namespace FoodForThrought.Data
             
         }
 
-        public DbSet<Register> Signup { get; set; }
+        public DbSet<AdminRegister> Signup { get; set; }
     }
 }

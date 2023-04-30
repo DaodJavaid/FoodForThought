@@ -2,7 +2,7 @@
 
 namespace FoodForThrought.Models
 {
-    public class Register
+    public class AdminRegister
     {
         [Key]
         public string username { get; set; }
