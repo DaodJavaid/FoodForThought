@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodForThrought.Models
 {
     public class AdminRegister
     {
         [Key]
+        public int Id { get; set; }
         public string username { get; set; }
         public string email { get; set; }
         public string password { get; set; }
@@ -14,6 +16,8 @@ namespace FoodForThrought.Models
         public string city { get; set; }
         public string country { get; set; }
         public string zip { get; set; }
+        [NotMapped]
+        public string email_old { get; set; }
 
     }
 }

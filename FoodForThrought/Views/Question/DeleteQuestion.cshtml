@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FoodForThrought.Models.AdminRegister>
+﻿@model IEnumerable<FoodForThrought.Models.QuestionnaireModel>
 
 @section Scripts {
     <script>
@@ -47,6 +47,19 @@
                         <div class="card card-animate">
                             <div class="card-body">
 
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Search Product</h4>
+
+                                    <div class="page-title-right">
+
+                                        <form method="post" action="SearchProduct" class="form-inline">
+                                            <div class="form-group">
+                                                <input type="text" name="product_title" class="form-control" id="search_product" placeholder="Enter Product Name Or Id" />
+                                            </div>
+                                            <button type="submit" id="Search_button_product" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
                                     <div class="card-body">
@@ -54,49 +67,42 @@
                                             <table class="table mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Username</th>
-                                                        <th>Email</th>
-                                                        <th>Address</th>
-                                                        <th>City</th>
-                                                        <th>Country</th>
-                                                        <th>Gender</th>
-                                                        <th>Zip</th>
+                                                        <th>Question Id</th>
+                                                        <th>Question</th>
+                                                        <th>Option1</th>
+                                                        <th>Option2</th>
+                                                        <th>Option3</th>
+                                                        <th>Option4</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                    @if (Model != null)
+                                                    @foreach (var questions in Model)
                                                     {
-                                                        @foreach (var users in Model)
-                                                        {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.Id)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.username)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.email)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.gender)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.country)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.city)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.zip)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => users.address)
-                                                                </td>
-                                                            </tr>
-                                                        }
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.emotion_questtion)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.first_option)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.second_option)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.third_option)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => questions.forth_option)
+                                                            </td>
+
+                                                        </tr>
+
                                                     }
                                                 </tbody>
                                             </table>
@@ -115,13 +121,13 @@
                     <div class="col-lg-12">
                         <div class="card card-animate">
                             <div class="card-body">
-                                <h4 class="card-title d-inline-block">Deleting user</h4>
+                                <h4 class="card-title d-inline-block">Update Product</h4>
 
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
-                                    <form method="post" action="Deleting_user" id="Register_form" enctype="multipart/form-data">
+                                        <form method="post" action="Deleting_question" id="Register_form" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <input type="email" name="email_old" class="form-control" id="inputname1" placeholder="Enter User Email" />
+                                                <input type="number" name="old_id" class="form-control" id="inputname1" placeholder="Enter Product Id" />
                                         </div>
 
                                         <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Delete Product</button>

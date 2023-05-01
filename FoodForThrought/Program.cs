@@ -33,10 +33,10 @@ options.UseSqlServer(connectionstring));
 builder.Services.AddDbContext<AdminDbContext>(options =>
 options.UseSqlServer(connectionstring));
 
-/* this Line Questions Database 
-builder.Services.AddDbContext<QuestionDbContext>(options =>
+/* this Line Questions Database */
+builder.Services.AddDbContext<QuestionnaireDbContext>(options =>
 options.UseSqlServer(connectionstring));
-*/
+
 
 var app = builder.Build();
 

@@ -11,84 +11,64 @@ namespace FoodForThrought.Controllers
 
         // Check how manay User Register
         public readonly RegisterDbcontext _registerDbcontext;
-
-
         public RegisterUser(RegisterDbcontext registerDbcontext)
         {
             _registerDbcontext = registerDbcontext;
         }
-
-
         public IActionResult AddRegisterUser()
         {
             return View();
         }
-        public IActionResult UpdateRegisterUser()
+        public IActionResult SearchandUpdateRegisterUser()
         {
-            return View();
+            var SearchandUpdate_user = _registerDbcontext.Signup.ToList();
+
+            return View(SearchandUpdate_user);
         }
         public IActionResult DeleteRegisterUser()
         {
-            return View();
+            var SearchandUpdate_user = _registerDbcontext.Signup.ToList();
+
+            return View(SearchandUpdate_user);
         }
         public IActionResult ViewAllRegisterUser()
         {
-            return View();
+            var SearchandUpdate_user = _registerDbcontext.Signup.ToList();
+
+            return View(SearchandUpdate_user);
         }
-        public IActionResult SearchRegisterUser()
+        public IActionResult Deleting_user(AdminRegister user)
         {
-            return View();
-        }
+           
 
-       /* [HttpPost]
-        public IActionResult Register_user_from_Admin(Adduserfromadmin Adduserfromadmin)
-        {
+                var user_delete = _registerDbcontext.Signup.ToList();
 
-            var check_registration = _registerDbcontext.Signup.ToList();
-
-            if (check_registration != null)
-            {
-                foreach (var getdata in check_registration)
+                if (user_delete != null)
                 {
-                    String mail = getdata.email;
-
-
-                    if (Adduserfromadmin.email == mail)
+                    foreach(var getdata in user_delete)
                     {
-                        TempData["confirm"] = "Email Already Exit";
-                        return RedirectToAction("AddRegisterUser");
-                    }
-                }
-            }
+                        String mail = getdata.email;
 
-            if (ModelState.IsValid)
-            {
-                if (Adduserfromadmin.password == Adduserfromadmin.confirm_password)
-                {
-                    try
-                    {
-                        _registerDbcontext.Add(Adduserfromadmin);
-                        _registerDbcontext.SaveChanges();
-                        TempData["confirm"] = "Signup Successfully";
-                    }
-                    catch (Exception)
-                    {
-                        TempData["confirm"] = "There is Some Error. user Not register";
 
+                        if (user.email_old == mail)
+                        {
+                            _registerDbcontext.Signup.Remove(user);
+                            _registerDbcontext.SaveChanges();
+                            TempData["confirm"] = "User Deleted Successfully";
+                        }
+                        else
+                        {
+                            TempData["confirm"] = "User Not Found";
+                        }
                     }
                 }
                 else
                 {
-                    TempData["confirm"] = "Password And Confirm Password Is Not Same";
-                    return RedirectToAction("AddRegisterUser");
+                    TempData["confirm"] = "There is Some Error. user_delete Not Valid";
                 }
-
-
-            }
-            return RedirectToAction("AddRegisterUser");
+            
+            return RedirectToAction("DeleteRegisterUser");
         }
-*/
-
 
     }
 }

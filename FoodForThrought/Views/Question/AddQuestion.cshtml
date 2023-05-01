@@ -1,0 +1,101 @@
+﻿@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".header").hide();
+            $("#footer").hide();
+        });
+    </script>
+}
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    @Html.Partial("_VerticalMenu")
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0 font-size-18">Add Question</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Food For Thought</a></li>
+                                    <li class="breadcrumb-item active">Add Question</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <h4 class="card-title d-inline-block">Adding Question</h4>
+
+                                <div id="morris-line-example" class="morris-chart" style="height: 320px;">
+
+                                    <form method="post" action="Adding_question" id="Register_form" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input type="text" name="emotion_questtion" class="form-control" id="inputname1" placeholder="Enter Question" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="first_option" class="form-control" id="inputname1" placeholder="Enter First Option" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="second_option" class="form-control" id="inputname2" placeholder="Enter Second Option" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="third_option" class="form-control" id="inputname3" placeholder="Enter Third Option" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="forth_option" class="form-control" id="inputname4" placeholder="Enter Forth Option" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Add Question</button>
+
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                    <!-- end row-->
+
+
+
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+    <!-- Overlay-->
+    <div class="menu-overlay"></div>
+

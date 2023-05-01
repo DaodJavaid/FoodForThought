@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FoodForThrought.Models.AddingProductModel>
+﻿@model IEnumerable<FoodForThrought.Models.AdminRegister>
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -52,32 +52,50 @@
                                             <table class="table mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Product Id</th>
-                                                        <th>Product Name</th>
-                                                        <th>Product Description</th>
-                                                        <th>Product Image</th>
+                                                        <th>No</th>
+                                                        <th>Username</th>
+                                                        <th>Email</th>
+                                                        <th>Address</th>
+                                                        <th>City</th>
+                                                        <th>Country</th>
+                                                        <th>Gender</th>
+                                                        <th>Zip</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                    @*     @foreach (var items in Model)
+                                                    @if (Model != null)
                                                     {
-                                                    <tr>
-                                                    <th>
-                                                    @Html.DisplayFor(modelItem => items.Id)
-                                                    </th>
-                                                    <td>
-                                                    @Html.DisplayFor(modelItem => items.product_title)
-                                                    </td>
-                                                    <td>
-                                                    @Html.DisplayFor(modelItem => items.product_desription)
-                                                    </td>
-                                                    <td>
-                                                    <img src="@Url.Content("~/images/Product_image/" + items.product_image_name)" height="120px" width="120px" alt="Product Image" />
-                                                    </td>
-                                                    </tr>
-
-                                                    }*@
+                                                        @foreach (var users in Model)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.Id)
+                                                                </td> 
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.username)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.email)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.gender)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.country)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.city)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.zip)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => users.address)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
