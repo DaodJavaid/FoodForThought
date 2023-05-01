@@ -24,12 +24,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18">Search And Update Product</h4>
+                            <h4 class="mb-0 font-size-18">Search And Update User</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">Food For Thought</a></li>
-                                    <li class="breadcrumb-item active">Search And Update Product</li>
+                                    <li class="breadcrumb-item active">Search And Update User</li>
                                 </ol>
                             </div>
 
@@ -47,7 +47,7 @@
                             <div class="card-body">
                                
                                  <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18">Search Product</h4>
+                                    <h4 class="mb-0 font-size-18">Search User</h4>
 
                             <div class="page-title-right">
 
@@ -132,23 +132,67 @@
 
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
-                                    <form method="post" action="SearchProduct" id="Register_form" enctype="multipart/form-data">
+                                    <form method="post" action="Adding_user" id="Register_form" enctype="multipart/form-data">
                                         <h1>Enter Old Product Name</h1>
                                         <div class="form-group">
-                                            <input type="text" name="product_title_old" class="form-control" id="inputname1" placeholder="Enter Old Product Name" />
+                                            <input type="email" name="email_old" class="form-control" id="inputname1" placeholder="Enter User Old Email" />
                                         </div>
                                        <h1>Enter Updated Data</h1>
-                                        <div class="form-group">
-                                            <input type="text" name="product_title" class="form-control" id="inputname1" placeholder="Enter Product Name" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4">First Name</label>
+                                                <input type="text" name="username" class="form-control" id="inputfirstname" placeholder="First Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4">Email</label>
+                                                <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4">Password</label>
+                                                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4">Password</label>
+                                                <input type="password" name="confirm_password" class="form-control" id="inputPassword4" placeholder="Password">
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <textarea type="text" name="product_desription" class="form-control" id="inputemail1" placeholder="Enter Product Description"></textarea>
+                                            <label for="inputAddress">Address</label>
+                                            <textarea type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St"></textarea>
                                         </div>
-                                        <label for="formFileSm" class="form-label">Upload Product Picture</label>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-5">
+                                                <label for="inputCountry">Country</label>
+                                                <input type="text" name="country" class="form-control" id="inputCountry">
+                                            </div>
 
-                                        <input class="form-control form-control-sm" name="product_img_NotMapped" id="formFileSm" type="file" />
+                                            <div class="form-group col-md-5">
+                                                <label for="inputCity">City</label>
+                                                <input type="text" name="city" class="form-control" id="inputCity">
+                                            </div>
 
-                                        <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Upload Product</button>
+                                            <div class="form-group col-md-1">
+                                                <label for="inputZip">Zip</label>
+                                                <input type="text" name="zip" class="form-control" id="inputZip">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Select Gender</label>
+                                            <select name="gender" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                                <option selected>Male</option>
+                                                <option value="1">Female</option>
+                                            </select>
+                                        </div>
+
+                                        @*  <div class="form-group">
+                                        <label for="exampleFormControlFile1">Choose Profile Picture</label>
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                        </div>
+                                        *@
+
+                                        <button type="submit" class="btn btn-primary">Add User</button>
 
                                     </form>
                                 </div>
