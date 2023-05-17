@@ -9,9 +9,14 @@ using System.Diagnostics;
 using System.Net.Mail;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.ML;
+using System.Drawing;
+using Microsoft.ML.Data;
 
 namespace FoodForThrought.Controllers
 {
+
+  //  facial expression in to one of seven categories(0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral).
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -78,6 +83,11 @@ namespace FoodForThrought.Controllers
 //[Authorize]
         public IActionResult Questions()
         {
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string imagePath_fromfolder = Path.Combine(contentRootPath, "wwwroot", "testimage", "daod.jpg");
+
+            Trainmodel(imagePath_fromfolder);
+
             return View();
         }
 
@@ -246,7 +256,6 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("Home");
         }
 
-
         [HttpPost]
         public IActionResult SaveImage(string imageData)
         {
@@ -284,13 +293,87 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("Register");
         }
 
-
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Home", "Home");
         }
+
+
+        //predict the Emotion on the images
+        public void Trainmodel(string imagePath)
+        {
+            // Create a new MLContext
+            var mlContext = new MLContext();
+
+            // Converting image to model input
+            var input = ConvertImageToInput(imagePath);
+
+            // Load data
+            var data = new[] { new ImageData { Conv2DInput = input } };
+            var dataView = mlContext.Data.LoadFromEnumerable(data);
+
+            // Define pipeline
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string modelPath_fromfolder = Path.Combine(contentRootPath, "wwwroot", "model", "my_model.onnx");
+
+            var pipeline = mlContext.Transforms.ApplyOnnxModel(
+                outputColumnNames: new[] { "dense_1" },
+                inputColumnNames: new[] { "conv2d_input" },
+                modelFile: modelPath_fromfolder
+            );
+
+            // Fit the pipeline to the data
+            var model = pipeline.Fit(dataView);
+
+            // Create a prediction engine
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<ImageData, EmotionPrediction>(model);
+
+            // Use the model to predict the output of the sample data
+            EmotionPrediction prediction = predictionEngine.Predict(new ImageData { Conv2DInput = input });
+
+            var predictedLabelIndex = prediction.PredictedLabels
+            .Select((value, index) => new { Value = value, Index = index })
+            .Aggregate((a, b) => (a.Value > b.Value) ? a : b)
+            .Index;
+
+            ViewBag.PredictedLabel = (EmotionLable)predictedLabelIndex;
+
+        }
+
+
+        //onvert an image into a grayscale and resize it to 48x48
+        private float[] ConvertImageToInput(string imagePath)
+        {
+            using var bitmap = new Bitmap(System.Drawing.Image.FromFile(imagePath), new Size(48, 48));
+            var input = new float[48 * 48];
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    var color = bitmap.GetPixel(x, y);
+                    var grayScale = (color.R * 0.3) + (color.G * 0.59) + (color.B * 0.11);
+                    input[y * bitmap.Width + x] = (float)grayScale / 255;
+                }
+            }
+            return input;
+        }
+
+        public class ImageData
+        {
+            [ColumnName("conv2d_input")]
+            [VectorType(1, 48, 48, 1)] // Adjust according to your ONNX model input shape
+            public float[] Conv2DInput { get; set; }
+        }
+
+        public class EmotionPrediction
+        {
+            [ColumnName("dense_1")] // Adjust according to your ONNX model output tensor name
+            [VectorType(7)] // If your model outputs a probability distribution over 7 classes, adjust if not correct
+            public float[] PredictedLabels { get; set; }
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
