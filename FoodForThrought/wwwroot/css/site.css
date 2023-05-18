@@ -1033,34 +1033,21 @@ body {
 
 
     /*************** Single catalouge *******************/
-#main_top_single_product_page {
-    padding: 100px 0px 100px 0px;
+.img-zoom {
+    transition: transform .5s;
+    margin: 0 auto;
 }
 
-#single-product-picture
+    .img-zoom:hover {
+        -ms-transform: scale(1.9); /* IE 9 */
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(1.1);
+    }
+
+#title_side
 {
-    padding: 10px;
+    padding: 70px;
 }
-
-#single-picture {
-    width: 100%;
-}
-
-#single-product-title
-{
-    font-family: lato;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-#single-product-description
-{
-    font-family: Poppins;
-    font-size: 16px;
-    font-weight: 400;
-}
-
-
 #emotion_button {
     background-color: #964B00;
     font-family: Poppins;

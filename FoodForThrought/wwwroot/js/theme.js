@@ -30,7 +30,7 @@
         initLeftMenuCollapse();
         initActiveMenu();
         initComponents();
-        Waves.init();
+       Waves.init();
     }
 
     init();

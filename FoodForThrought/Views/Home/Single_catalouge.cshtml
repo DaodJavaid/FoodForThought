@@ -4,229 +4,42 @@
 
 
 
-
-<!-- Product Details Section Start -->
-<div class="section section-padding-02 mt-n10">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6">
-
-                <!-- Product Details Images Start -->
-                <div class="product-details-images">
-
-                    <!-- Details Gallery Images Start -->
-                    <div class="details-gallery-images">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="single-img zoom">
-                                        <img src="assets/images/product-details/product-details-1.jpg" alt="Product Image">
-                                        <div class="inner-stuff">
-                                            <div class="gallery-item" data-src="assets/images/product-details/product-details-1.jpg">
-                                                <a href="javascript:void(0)">
-                                                    <i class="lastudioicon-full-screen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="single-img zoom">
-                                        <img src="assets/images/product-details/product-details-2.jpg" alt="Product Image">
-                                        <div class="inner-stuff">
-                                            <div class="gallery-item" data-src="assets/images/product-details/product-details-2.jpg">
-                                                <a href="javascript:void(0)">
-                                                    <i class="lastudioicon-full-screen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="single-img zoom">
-                                        <img src="assets/images/product-details/product-details-3.jpg" alt="Product Image">
-                                        <div class="inner-stuff">
-                                            <div class="gallery-item" data-src="assets/images/product-details/product-details-3.jpg">
-                                                <a href="javascript:void(0)">
-                                                    <i class="lastudioicon-full-screen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="single-img zoom">
-                                        <img src="assets/images/product-details/product-details-4.jpg" alt="Product Image">
-                                        <div class="inner-stuff">
-                                            <div class="gallery-item" data-src="assets/images/product-details/product-details-4.jpg">
-                                                <a href="javascript:void(0)">
-                                                    <i class="lastudioicon-full-screen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="single-img zoom">
-                                        <img src="assets/images/product-details/product-details-5.jpg" alt="Product Image">
-                                        <div class="inner-stuff">
-                                            <div class="gallery-item" data-src="assets/images/product-details/product-details-5.jpg">
-                                                <a href="javascript:void(0)">
-                                                    <i class="lastudioicon-full-screen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Details Gallery Images End -->
-                    <!-- Details Gallery Thumbs Start -->
-                    <div class="details-gallery-thumbs">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="assets/images/product-details/product-details-1.jpg" alt="Product Thumbnail">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/product-details/product-details-2.jpg" alt="Product Thumbnail">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/product-details/product-details-3.jpg" alt="Product Thumbnail">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/product-details/product-details-4.jpg" alt="Product Thumbnail">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/product-details/product-details-5.jpg" alt="Product Thumbnail">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
-                        <div class="swiper-button-next"><i class="pe-7s-angle-right"></i></div>
-                    </div>
-                    <!-- Details Gallery Thumbs End -->
-
-                </div>
-                <!-- Product Details Images End -->
-
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <span class='zoom' id='ex1'>
+            <img src="/testimage/daod.jpg" class="img-fluid img-zoom" alt="Product Image">
+            </span>
+        </div>
+        <div class="col-md-6" id="title_side">
+            <h2>Product Title</h2>
+             <div class="my-3">
+                <a asp-controller="Home" asp-action="Detectemotion" class="btn btn__primary btn__hover2">Detect Emotion</a>
             </div>
-            <div class="col-lg-6">
-
-                <!-- Product Details Description Start -->
-                <div class="product-details-description">
-                    <h4 class="product-name">High quality vase bottle.</h4>
-                    <div class="price">
-                        <span class="sale-price">$240.00</span>
-                        <span class="old-price">$290.00</span>
-                    </div>
-                    <div class="review-wrapper">
-                        <div class="review-star">
-                            <div class="star" style="width: 80%;"></div>
-                        </div>
-                        <p>( 1 Customer Review )</p>
-                    </div>
-
-                    <div class="product-color">
-                        <span class="lable">Color:</span>
-                        <ul>
-                            <li>
-                                <input type="radio" name="colors" id="color1">
-                                <label for="color1"><span class="color-blue"></span></label>
-                            </li>
-                            <li>
-                                <input type="radio" name="colors" id="color2">
-                                <label for="color2"><span class="color-gray"></span></label>
-                            </li>
-                            <li>
-                                <input type="radio" name="colors" id="color3">
-                                <label for="color3"><span class="color-dark-blue"></span></label>
-                            </li>
-                            <li>
-                                <input type="radio" name="colors" id="color4">
-                                <label for="color4"><span class="color-gray-dark"></span></label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <p>Lorem ipsum dolor sit amet, consectet adipisicing elit, sed do eiusmod temporf incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis tyu nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-
-                    <div class="product-meta">
-                        <div class="product-quantity d-inline-flex">
-                            <button type="button" class="sub">-</i></button>
-                            <input type="text" value="1" />
-                            <button type="button" class="add">+</button>
-                        </div>
-                        <div class="meta-action">
-                            <button class="btn btn-dark btn-hover-primary">Add To Cart</button>
-                        </div>
-                        <div class="meta-action">
-                            <a class="action" href="#"><i class="pe-7s-like"></i></a>
-                        </div>
-                        <div class="meta-action">
-                            <a class="action" href="#"><i class="pe-7s-shuffle"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="single-info">
-                            <span class="lable">SKU:</span>
-                            <span class="value">Ch-256xl</span>
-                        </div>
-                        <div class="single-info">
-                            <span class="lable">Categories:</span>
-                            <span class="value"><a href="#">Office,</a> <a href="#">Home</a></span>
-                        </div>
-                        <div class="single-info">
-                            <span class="lable">tag:</span>
-                            <span class="value"><a href="#">Furniture</a></span>
-                        </div>
-                        <div class="single-info">
-                            <span class="lable">Share:</span>
-                            <ul class="social">
-                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Product Details Description End -->
-
+            <div>
+                <h5>
+                    Tag's
+                </h5>
+                <span class="badge badge-primary">Tag 1</span>
+                <span class="badge badge-secondary">Tag 2</span>
+                <!-- Additional Tags -->
+            </div>
+            <div class="my-4">
+                <!-- Add your icons here. For instance, using Font Awesome icons -->
+                <h5>
+                    Social Media
+                </h5>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-heart"></i>
+                <!-- Additional Icons -->
             </div>
         </div>
-
     </div>
-</div>
-<!-- Product Details Section End -->
-<!-- Product Details tab Section Start -->
-<div class="section section-padding-02">
-    <div class="container">
-
-        <!-- Product Details Tabs Start -->
-        <div class="product-details-tabs">
-            <ul class="nav justify-content-center">
-                <li><button class="active" data-bs-toggle="tab" data-bs-target="#description">Description</button></li>
-            </ul>
-
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="description">
-                    <!-- Description Content Start -->
-                    <div class="description-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimlo ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officiarty deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantiu totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
-                    </div>
-                    <!-- Description Content End -->
-                </div>
-
-            </div>
+    <div class="row mt-5">
+        <div class="col-12  text-center">
+            <h3>Description</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dapibus ante in neque iaculis, non tempus lorem mollis.</p>
+            <!-- Additional Description -->
         </div>
-        <!-- Product Details Tabs End -->
-
     </div>
 </div>
-<!-- Product Details tab Section End -->

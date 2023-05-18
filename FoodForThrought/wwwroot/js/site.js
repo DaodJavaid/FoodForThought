@@ -31,7 +31,7 @@ function ClosesideBar() {
 /*==========   Scroll Top Button   ==========*/
 
 // Get the button:
-let mybutton = document.getElementById("myBtn");
+let mybutton = mybutton || document.getElementById("myBtn");
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () { scrollFunction() };
@@ -52,11 +52,11 @@ function topFunction() {
 
 
 
-/*==========  Animation on Scroll  ==========*/
+/*==========  Animation on Scroll  ==========
 
 $('.block').smoove({ offset: '40%' });
 
-
+*/
 
 /*==========  Signup Check  ==========*/
 
@@ -74,4 +74,4 @@ function selectcatalouge() {
 }
 
 
-
+/*======= Zoom Effect  ===========*/

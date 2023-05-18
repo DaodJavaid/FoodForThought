@@ -29,11 +29,15 @@
         <div class="col">
            
         </div>
+        <div class="row">
         <div class="col" id="emotionbutton" >
             <button class="btn btn__primary btn__hover2" id="openCameraButton" >Open Camera</button>
             <button class="btn btn__primary btn__hover2" id="captureImageButton" disabled>Capture Image</button>
             <button class="btn btn__primary btn__hover2" id="stopCameraButton" disabled>Stop Camera</button>
-          
+                <button class="btn btn__primary btn__hover2" id="uploadImageButton">Upload Image</button>
+                <input type="file" id="imageFile" accept="image/*" style="display: none;" />
+
+            </div>
         </div>
         <div class="col">
            
@@ -125,7 +129,7 @@
                     imageData: imageData
                 },
                 success: function (result) {
-                    console.log(result);
+                    window.location.href = result;
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
@@ -133,4 +137,38 @@
             });
         }
     });
+
+    // This Function is use to upload image 
+
+    $('#uploadImageButton').click(function () {
+        $('#imageFile').click();
+    });
+
+    $('#imageFile').change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                capturedImagePreview.src = e.target.result;
+
+                // Do your AJAX request here just like in the #captureImageButton click event
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveImage", "Home")",
+                    data: {
+                        imageData: e.target.result
+                    },
+                    success: function (result) {
+                        window.location.href = result;
+                        //console.log(result);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+
 </script>

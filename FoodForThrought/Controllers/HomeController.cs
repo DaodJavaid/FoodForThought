@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.ML;
 using System.Drawing;
 using Microsoft.ML.Data;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodForThrought.Controllers
 {
@@ -20,10 +21,10 @@ namespace FoodForThrought.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public readonly RegisterDbcontext _registerDbcontext;
-
         public readonly ContactDbcontext _contactDbcontext;
+        public readonly ProductimageDbcontext _displayProductnow;
+
 
 
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -31,22 +32,28 @@ namespace FoodForThrought.Controllers
         public HomeController(ILogger<HomeController> logger,
                RegisterDbcontext registerDbcontext, 
                ContactDbcontext contactDbcontext,
+               ProductimageDbcontext displayProductnow,
                IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _registerDbcontext = registerDbcontext;
             _contactDbcontext =  contactDbcontext;
+            _displayProductnow = displayProductnow;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Home()
         {
-            return View();
+            var show_product = _displayProductnow.AddingProduct.ToList();
+
+            return View(show_product);
         }
 
         public IActionResult Catalogue()
         {
-            return View();
+            var show_product = _displayProductnow.AddingProduct.ToList();
+
+            return View(show_product);
         }
 
         public IActionResult About()
@@ -74,20 +81,32 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
-     //   [Authorize]
+        //   [Authorize]
         public IActionResult Detectemotion()
         {
-            return View();
+          return View();
         }
 
-//[Authorize]
+        //[Authorize]
         public IActionResult Questions()
         {
-            string contentRootPath = _webHostEnvironment.ContentRootPath;
-            string imagePath_fromfolder = Path.Combine(contentRootPath, "wwwroot", "testimage", "daod.jpg");
+             string imageDirectoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+
+             string[] imageFiles = Directory.GetFiles(imageDirectoryPath);
+
+             string imagePath_fromfolder = imageFiles[0]; // This will get the path of the first image file in the directory
 
             Trainmodel(imagePath_fromfolder);
 
+            // Deleting the folder after detect emotion
+           /* string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            DirectoryInfo di = new DirectoryInfo(imageDirectoryPath);
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            */
             return View();
         }
 
@@ -249,6 +268,7 @@ namespace FoodForThrought.Controllers
                     else
                     {
                             TempData["confirm"] = "Email and Password Incorrect";
+                        return RedirectToAction("Login");
                     }
                 }
             }
@@ -259,10 +279,12 @@ namespace FoodForThrought.Controllers
         [HttpPost]
         public IActionResult SaveImage(string imageData)
         {
-            try
+            if(!imageData.IsNullOrEmpty())
             {
 
-                byte[] bytes = Convert.FromBase64String(imageData.Replace("data:image/png;base64,", ""));
+                
+                string base64Data = imageData.Split(',')[1];
+                byte[] bytes = Convert.FromBase64String(base64Data);
                 string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
                 string fileName = Guid.NewGuid().ToString() + ".png";
                 string filePath = Path.Combine(folderPath, fileName);
@@ -274,23 +296,12 @@ namespace FoodForThrought.Controllers
 
                 System.IO.File.WriteAllBytes(filePath, bytes);
                 // Wait for 1 second
-                Thread.Sleep(10000); // 10000 milliseconds = 10 second
+                // Thread.Sleep(10000); // 10000 milliseconds = 10 second
 
-                // Deleting the folder after detect emotion
-                string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                DirectoryInfo di = new DirectoryInfo(folderPath1);
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message });
+                //    Trainmodel();
             }
 
-            return RedirectToAction("Register");
+            return Json("Questions");
         }
 
         public async Task<IActionResult> LogOut()
@@ -300,10 +311,10 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("Home", "Home");
         }
 
-
         //predict the Emotion on the images
         public void Trainmodel(string imagePath)
         {
+           
             // Create a new MLContext
             var mlContext = new MLContext();
 
@@ -339,9 +350,7 @@ namespace FoodForThrought.Controllers
             .Index;
 
             ViewBag.PredictedLabel = (EmotionLable)predictedLabelIndex;
-
         }
-
 
         //onvert an image into a grayscale and resize it to 48x48
         private float[] ConvertImageToInput(string imagePath)
@@ -373,7 +382,6 @@ namespace FoodForThrought.Controllers
             [VectorType(7)] // If your model outputs a probability distribution over 7 classes, adjust if not correct
             public float[] PredictedLabels { get; set; }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

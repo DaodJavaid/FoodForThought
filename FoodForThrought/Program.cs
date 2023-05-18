@@ -53,6 +53,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseHttpsRedirection();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Home}/{id?}");
