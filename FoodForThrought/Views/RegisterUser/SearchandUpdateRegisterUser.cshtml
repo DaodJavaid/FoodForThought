@@ -132,12 +132,17 @@
 
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
-                                    <form method="post" action="Adding_user" id="Register_form" enctype="multipart/form-data">
+                                    <form method="post" action="Search" id="Register_form" enctype="multipart/form-data">
                                         <h1>Enter Old User Email</h1>
                                         <div class="form-group">
                                             <input type="email" name="email_old" class="form-control" id="inputname1" placeholder="Enter User Old Email" />
+                                         <button type="submit" class="btn btn-primary">Get User Data</button>
                                         </div>
-                                       <h1>Enter Updated Data</h1>
+                                     </form>
+
+
+                                    <form method="post" action="Adding_user" id="Register_form" enctype="multipart/form-data">
+                                        <h1>Enter Updated Data</h1>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">First Name</label>
@@ -192,7 +197,7 @@
                                         </div>
                                         *@
 
-                                        <button type="submit" class="btn btn-primary">Add User</button>
+                                        <button type="submit" class="btn btn-primary">Update User</button>
 
                                     </form>
                                 </div>

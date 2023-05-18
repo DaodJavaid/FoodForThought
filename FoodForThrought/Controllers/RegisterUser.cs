@@ -21,9 +21,12 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
-        public IActionResult SearchandUpdateRegisterUser()
+        public IActionResult SearchandUpdateRegisterUser(AdminRegister searchuser)
         {
             var SearchandUpdate_user = _registerDbcontext.Signup.ToList();
+
+           // var userToSearch = _registerDbcontext.Signup.FirstOrDefault(u => u.email == searchuser.email_old);
+
 
             return View(SearchandUpdate_user);
         }
@@ -92,6 +95,13 @@ namespace FoodForThrought.Controllers
             }
 
             return RedirectToAction("DeleteRegisterUser");
+        }
+
+        public IActionResult Search(AdminRegister searchuser)
+        {
+            var userToSearch= _registerDbcontext.Signup.FirstOrDefault(u => u.email == searchuser.email_old);
+               // Pass the user data to the view
+                return RedirectToAction("SearchandUpdateRegisterUser");
         }
     }
 }

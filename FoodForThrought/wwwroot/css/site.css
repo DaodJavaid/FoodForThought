@@ -1318,3 +1318,11 @@ body {
 {
     padding-bottom: 300px;
 }
+
+#cardbottom {
+    padding-bottom: 0px;
+}
+
+#imagewidth {
+    width: 100%;
+}
