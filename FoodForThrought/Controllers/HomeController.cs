@@ -66,9 +66,11 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
-        public IActionResult Single_catalouge()
+        public IActionResult Single_catalouge(int id)
         {
-            return View();
+            var product = _displayProductnow.AddingProduct.Find(id);
+
+            return View(product);
         }
 
         public IActionResult Login()
@@ -81,16 +83,31 @@ namespace FoodForThrought.Controllers
             return View();
         }
 
-        //   [Authorize]
+        [Authorize(AuthenticationSchemes = "ClientAuthentication")]
         public IActionResult Detectemotion()
         {
-          return View();
+            ClaimsPrincipal claimUser = HttpContext.User;
+
+            if (!claimUser.Identity.IsAuthenticated)
+            {
+                // User is authorized to access this action
+                return RedirectToAction("Login");
+            }
+            return View();
         }
 
-        //[Authorize]
+        [Authorize(AuthenticationSchemes = "ClientAuthentication")]
         public IActionResult Questions()
         {
-             string imageDirectoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            ClaimsPrincipal claimUser = HttpContext.User;
+
+            if (!claimUser.Identity.IsAuthenticated)
+            {
+                // User is authorized to access this action
+                return RedirectToAction("Login");
+            }
+
+            string imageDirectoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
 
              string[] imageFiles = Directory.GetFiles(imageDirectoryPath);
 

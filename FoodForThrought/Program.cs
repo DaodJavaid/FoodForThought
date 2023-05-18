@@ -8,11 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 /* Authentication Code*/
-builder.Services.AddAuthentication(
-    CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(option => {
-        option.LoginPath = "/Admin/AdminLogin";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+builder.Services.AddAuthentication()
+    .AddCookie("AdminAuthentication", options =>
+    {
+        options.Cookie.Name = "AdminAuth";
+        options.LoginPath = "/Admin/AdminLogin";
+    })
+    .AddCookie("ClientAuthentication", options =>
+    {
+        options.Cookie.Name = "ClientAuth";
+        options.LoginPath = "/Home/Login";
     });
 
 var connectionstring = builder.Configuration.GetConnectionString("dbConnection");
@@ -50,7 +55,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.UseHttpsRedirection();

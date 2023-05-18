@@ -2,44 +2,39 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
+@model FoodForThrought.Models.AddingProductModel
 
 
 <div class="container py-5">
     <div class="row">
         <div class="col-md-6">
             <span class='zoom' id='ex1'>
-            <img src="/testimage/daod.jpg" class="img-fluid img-zoom" alt="Product Image">
+                <img id="single_product_image" src="@Url.Content("~/images/Product_image/" + Model.product_image_name)" class="img-fluid img-zoom" alt="Product Image">
             </span>
         </div>
         <div class="col-md-6" id="title_side">
-            <h2>Product Title</h2>
-             <div class="my-3">
+            <h2>@Model.product_title</h2>
+            <p>@Model.product_desription</p>
+
+            <div class="my-3">
                 <a asp-controller="Home" asp-action="Detectemotion" class="btn btn__primary btn__hover2">Detect Emotion</a>
             </div>
-            <div>
-                <h5>
-                    Tag's
-                </h5>
-                <span class="badge badge-primary">Tag 1</span>
-                <span class="badge badge-secondary">Tag 2</span>
-                <!-- Additional Tags -->
-            </div>
-            <div class="my-4">
+           <div class="my-4">
                 <!-- Add your icons here. For instance, using Font Awesome icons -->
                 <h5>
                     Social Media
                 </h5>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-heart"></i>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                </li>
                 <!-- Additional Icons -->
             </div>
         </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col-12  text-center">
-            <h3>Description</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dapibus ante in neque iaculis, non tempus lorem mollis.</p>
-            <!-- Additional Description -->
-        </div>
-    </div>
+    </div>   
 </div>

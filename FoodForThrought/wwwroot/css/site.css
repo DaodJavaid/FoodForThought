@@ -1046,7 +1046,7 @@ body {
 
 #title_side
 {
-    padding: 70px;
+    padding-top: 70px;
 }
 #emotion_button {
     background-color: #964B00;
@@ -1325,4 +1325,12 @@ body {
 
 #imagewidth {
     width: 100%;
+}
+
+#single_product_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    margin-top: 70px;
 }

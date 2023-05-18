@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace FoodForThrought.Controllers
 {
+    
     public class AdminController : Controller
     {
 
@@ -28,9 +29,7 @@ namespace FoodForThrought.Controllers
             _registerDbcontext = registerDbcontext;
             _displayProductnow = displayProductnow;
         }
-
-
-       [Authorize]
+        [Authorize(AuthenticationSchemes = "AdminAuthentication")]
         public IActionResult AdminDeshboard()
         {
           ClaimsPrincipal claimUser = HttpContext.User;
@@ -96,8 +95,7 @@ namespace FoodForThrought.Controllers
                             IsPersistent = true,
                         };
 
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity), properties);
+                        await HttpContext.SignInAsync("AdminAuthentication", new ClaimsPrincipal(claimsIdentity), properties);
 
                         TempData["confirm"] = "Login Successfully";
                         break;
@@ -113,7 +111,6 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("AdminDeshboard", "Admin");
         }
      
-
         [HttpPost]
         public IActionResult Register_Admin(AdminRegister1 Admin_register)
         {
@@ -161,7 +158,6 @@ namespace FoodForThrought.Controllers
             }
             return RedirectToAction("AdminLogin");
         }
-
 
         public async Task<IActionResult> LogOut()
         {
