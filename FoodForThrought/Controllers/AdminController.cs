@@ -43,13 +43,14 @@ namespace FoodForThrought.Controllers
 
             // Check how manay User Register
             int Usercount = _registerDbcontext.Signup.Count();
+            var ShowUser = _registerDbcontext.Signup.ToList();
             ViewBag.Usercount = Usercount;
 
             // Check how manay Product Add in database
             int Productcount = _displayProductnow.AddingProduct.Count();
             ViewBag.Productcount = Productcount;
 
-            return View();
+            return View(ShowUser);
         }
 
         public IActionResult AdminLogin()

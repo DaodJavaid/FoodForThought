@@ -99,14 +99,14 @@ namespace FoodForThrought.Controllers
             Trainmodel(imagePath_fromfolder);
 
             // Deleting the folder after detect emotion
-           /* string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-            DirectoryInfo di = new DirectoryInfo(imageDirectoryPath);
+            string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            DirectoryInfo di = new DirectoryInfo(folderPath1);
             foreach (FileInfo file in di.GetFiles())
             {
                 file.Delete();
             }
 
-            */
+            
             return View();
         }
 

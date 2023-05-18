@@ -1249,11 +1249,12 @@ body {
         }
 }
 
-
-
-/*********************** Home 3section ****************************/
-#title_home_3section
+#user_background
 {
+    padding-bottom: 50%;
+}
+/*********************** Home 3section ****************************/
+#title_home_3section {
     font-family: lato;
     padding-top: 100px;
     padding-bottom: 100px;

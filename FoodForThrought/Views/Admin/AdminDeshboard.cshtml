@@ -1,4 +1,6 @@
-﻿@section Scripts {
+﻿@model IEnumerable<FoodForThrought.Models.AdminRegister>
+
+@section Scripts {
     <script>
         $(document).ready(function () {
             $(".header").hide();
@@ -141,41 +143,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Arthur Powell</td>
-                                                <td>Male</td>
-                                                <td>Arthur@gmail.com</td>
-                                                    <td>Pakistan</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td>Joan Lennox</td>
-                                                <td>Female</td>
-                                                <td>Joan@gmail.com</td>
-                                                    <td>Pakistan</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td>Ronald Roesler</td>
-                                                <td>Male</td>
-                                                <td>Ronald@gmail.com</td>
-                                                <td>Pakistan</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td>Mickey Cochran</td>
-                                                <td>Female</td>
-                                                <td>Mickey@gmail.com</td>
-                                                    <td>Pakistan</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                 <td>Barry Trahan</td>
-                                                <td>Male</td>
-                                                <td>Barry@gmail.com</td>
-                                                <td>Pakistan</td>
-                                            </tr>
+
+                                              @if (Model != null)
+                                              {
+                                                    @foreach (var users in Model)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => users.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => users.username)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => users.gender)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => users.email)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => users.country)
+                                                            </td>
+                                                         </tr>
+                                                    }
+                                             }
+
                                         </tbody>
                                     </table>
                                 </div>
