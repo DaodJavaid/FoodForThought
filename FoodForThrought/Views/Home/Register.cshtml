@@ -1,6 +1,8 @@
 ﻿@model AdminRegister
 
 
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 
 
 <div class="container" id="Register_main_body">
@@ -16,16 +18,16 @@
             <div class="row">
                 <form method="post" action="Register_user" id="Register_form">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" id="inputname1" placeholder="Enter Your Username" />
+                        <input type="text" name="admin_username" class="form-control" id="inputname1" placeholder="Enter Your Username" />
                     </div>
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
+                        <input type="email" name="admin_email" class="form-control" id="inputemail1" placeholder="Enter Your Email" />
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" id="inputpassword1" placeholder="Enter Your Password" />
+                        <input type="password" name="admin_password" class="form-control" id="inputpassword1" placeholder="Enter Your Password" />
                     </div> 
                     <div class="form-group">
-                        <input type="password" name="confirm_password" class="form-control" id="inputpassword2" placeholder="Enter Confirm Password" />
+                        <input type="password" name="admin_confirm_password" class="form-control" id="inputpassword2" placeholder="Enter Confirm Password" />
                     </div>
                     <button type="submit" class="btn btn-primary" id="Register_button">Submit & Register</button>
 

@@ -29,17 +29,11 @@ namespace FoodForThrought.Controllers
             _registerDbcontext = registerDbcontext;
             _displayProductnow = displayProductnow;
         }
+       
         [Authorize(AuthenticationSchemes = "AdminAuthentication")]
         public IActionResult AdminDeshboard()
         {
-          ClaimsPrincipal claimUser = HttpContext.User;
-
-            if(!claimUser.Identity.IsAuthenticated)
-            {
-                // User is authorized to access this action
-                return RedirectToAction("AdminLogin", "Admin");
-            }
-
+            
             // Check how manay User Register
             int Usercount = _registerDbcontext.Signup.Count();
             var ShowUser = _registerDbcontext.Signup.ToList();
@@ -85,7 +79,7 @@ namespace FoodForThrought.Controllers
                              };
 
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                      claims, "AdminAuthentication");
 
 
                         AuthenticationProperties properties = new AuthenticationProperties()
@@ -95,8 +89,8 @@ namespace FoodForThrought.Controllers
                             IsPersistent = true,
                         };
 
-                        await HttpContext.SignInAsync("AdminAuthentication", new ClaimsPrincipal(claimsIdentity), properties);
-
+                        await HttpContext.SignInAsync("AdminAuthentication",
+                             new ClaimsPrincipal(claimsIdentity), properties);
                         TempData["confirm"] = "Login Successfully";
                         break;
                     }
@@ -159,10 +153,11 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("AdminLogin");
         }
 
-        public async Task<IActionResult> LogOut()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+        [Authorize(AuthenticationSchemes = "AdminAuthentication")]
+        public async Task<IActionResult> AdminLogOut()
+        {
+            await HttpContext.SignOutAsync("AdminAuthentication");
             return RedirectToAction("Home", "Home");
         }
     }

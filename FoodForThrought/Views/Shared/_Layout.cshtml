@@ -59,10 +59,13 @@
                         </button>
                         @if (User.Identity.IsAuthenticated)
                         {
+                            if (User.HasClaim("OtherProperties", "User"))
+                            {
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserDeshboard">Deshboard</a>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a>
                             </div>
+                            }
                         }
                         else
                         {

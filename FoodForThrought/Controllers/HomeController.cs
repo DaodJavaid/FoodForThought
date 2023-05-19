@@ -86,14 +86,7 @@ namespace FoodForThrought.Controllers
         [Authorize(AuthenticationSchemes = "ClientAuthentication")]
         public IActionResult Detectemotion()
         {
-            ClaimsPrincipal claimUser = HttpContext.User;
-
-            if (!claimUser.Identity.IsAuthenticated)
-            {
-                // User is authorized to access this action
-                return RedirectToAction("Login");
-            }
-            return View();
+           return View();
         }
 
         [Authorize(AuthenticationSchemes = "ClientAuthentication")]
@@ -197,9 +190,8 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register_user(AdminRegister register)
+        public IActionResult Register_user(AdminRegister1 register)
         {
-
             var check_registration = _registerDbcontext.Signup.ToList();
 
             if (check_registration != null)
@@ -208,41 +200,29 @@ namespace FoodForThrought.Controllers
                 {
                     String mail = getdata.email;
 
-
-                    if (register.email == mail )
+                    if (register.admin_email == mail)
                     {
                         TempData["confirm"] = "Email Already Exit";
-                        return RedirectToAction("Register");
+                        return RedirectToAction("AddRegisterUser");
                     }
                 }
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                if (register.password == register.confirm_password)
-                {
-                    try
-                    {
-                        _registerDbcontext.Add(register);
-                        _registerDbcontext.SaveChanges();
-                        TempData["confirm"] = "Signup Successfully";
-                    }
-                    catch (Exception)
-                    {
-                        TempData["confirm"] = "There is Some Error. user Not register";
-
-                    }
-                }
-                else
-                {
-                    TempData["confirm"] = "Password And Confirm Password Is Not Same";
-                    return RedirectToAction("Register");
-                }
-
+                _registerDbcontext.Add(register);
+                _registerDbcontext.SaveChanges();
+                TempData["confirm"] = "Create Account Successfully";
+            }
+            catch (Exception)
+            {
+                TempData["confirm"] = "There is Some Error. user Not register";
 
             }
-            return RedirectToAction("Login");
+
+            return RedirectToAction("Register");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> login_user(AdminLogin login)
@@ -266,8 +246,7 @@ namespace FoodForThrought.Controllers
                              };
 
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
+                       claims, "ClientAuthentication");
 
                         AuthenticationProperties properties = new AuthenticationProperties()
                         {
@@ -276,8 +255,8 @@ namespace FoodForThrought.Controllers
                             IsPersistent = true,
                         };
 
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity), properties);
+                        await HttpContext.SignInAsync("ClientAuthentication",
+                        new ClaimsPrincipal(claimsIdentity), properties);
 
                         TempData["confirm"] = "Login Successfully";
                         break;
@@ -290,7 +269,7 @@ namespace FoodForThrought.Controllers
                 }
             }
 
-            return RedirectToAction("Home");
+            return RedirectToAction("Detectemotion");
         }
 
         [HttpPost]
@@ -320,11 +299,10 @@ namespace FoodForThrought.Controllers
 
             return Json("Questions");
         }
-
+        [Authorize(AuthenticationSchemes = "ClientAuthentication")]
         public async Task<IActionResult> LogOut()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
+            await HttpContext.SignOutAsync("ClientAuthentication");
             return RedirectToAction("Home", "Home");
         }
 
