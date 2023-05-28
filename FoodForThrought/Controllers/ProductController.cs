@@ -1,5 +1,4 @@
 ﻿using FoodForThrought.Data;
-using FoodForThrought.Migrations.ProductimageDbcontextMigrations;
 using FoodForThrought.Models;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;

@@ -17,13 +17,14 @@ using Microsoft.IdentityModel.Tokens;
 namespace FoodForThrought.Controllers
 {
 
-  //  facial expression in to one of seven categories(0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral).
+  //  facial expression in to one of four categories(0=Angry, 1=Fear, 3=Happy, 4=Sad).
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         public readonly RegisterDbcontext _registerDbcontext;
         public readonly ContactDbcontext _contactDbcontext;
         public readonly ProductimageDbcontext _displayProductnow;
+        public readonly QuestionnaireDbContext _questionnaireDbContext;
 
 
 
@@ -33,12 +34,14 @@ namespace FoodForThrought.Controllers
                RegisterDbcontext registerDbcontext, 
                ContactDbcontext contactDbcontext,
                ProductimageDbcontext displayProductnow,
+               QuestionnaireDbContext questionnaireDbContext,
                IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _registerDbcontext = registerDbcontext;
             _contactDbcontext =  contactDbcontext;
             _displayProductnow = displayProductnow;
+            _questionnaireDbContext = questionnaireDbContext;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -115,8 +118,10 @@ namespace FoodForThrought.Controllers
             {
                 file.Delete();
             }
-
             
+            var show_question = _questionnaireDbContext.Question.ToList();
+
+
             return View();
         }
 
@@ -190,8 +195,17 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register_user(AdminRegister1 register)
+        public IActionResult Register_user(AdminRegister register)
         {
+            // If any property is an empty string, set it to null
+            register.address = string.IsNullOrEmpty(register.address) ? null : register.address;
+            register.gender = string.IsNullOrEmpty(register.gender) ? null : register.gender;
+            register.city = string.IsNullOrEmpty(register.city) ? null : register.city;
+            register.country = string.IsNullOrEmpty(register.country) ? null : register.country;
+            register.zip = string.IsNullOrEmpty(register.zip) ? null : register.zip;
+
+
+
             var check_registration = _registerDbcontext.Signup.ToList();
 
             if (check_registration != null)
@@ -200,7 +214,7 @@ namespace FoodForThrought.Controllers
                 {
                     String mail = getdata.email;
 
-                    if (register.admin_email == mail)
+                    if (register.email == mail)
                     {
                         TempData["confirm"] = "Email Already Exit";
                         return RedirectToAction("AddRegisterUser");
@@ -214,13 +228,13 @@ namespace FoodForThrought.Controllers
                 _registerDbcontext.SaveChanges();
                 TempData["confirm"] = "Create Account Successfully";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                TempData["confirm"] = "There is Some Error. user Not register";
-
+                var innerException = ex.InnerException != null ? ex.InnerException.Message : "";
+                TempData["confirm"] = $"There is an error: {ex.Message}. Inner exception: {innerException}. User not registered.";
             }
 
-            return RedirectToAction("Register");
+            return RedirectToAction("Login");
         }
 
 
@@ -264,7 +278,6 @@ namespace FoodForThrought.Controllers
                     else
                     {
                             TempData["confirm"] = "Email and Password Incorrect";
-                        return RedirectToAction("Login");
                     }
                 }
             }
