@@ -16,7 +16,7 @@ namespace FoodForThrought.Migrations.QuestionnaireDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -42,6 +42,10 @@ namespace FoodForThrought.Migrations.QuestionnaireDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("second_option")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("select_emotion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

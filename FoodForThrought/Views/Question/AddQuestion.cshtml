@@ -48,8 +48,26 @@
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
                                     <form method="post" action="Adding_question" id="Register_form" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <input type="text" name="emotion_questtion" class="form-control" id="inputname1" placeholder="Enter Question" />
+                                        
+                                            <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+
+                                                    <label for="exampleSelect1">Select Emotion</label>
+                                            <select name="select_emotion" class="form-control" id="exampleSelect1">
+                                                        <option value="0">Angry</option>
+                                                        <option value="1">Fear</option>
+                                                        <option value="2">Happy</option>
+                                                        <option value="3">Sad</option>
+                                            </select>
+                                            </div>
+                                            </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="text" name="emotion_questtion" class="form-control" id="inputname1" placeholder="Enter Question" />
+                                                    </div>
+                                            </div>
+                                        
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
@@ -73,6 +91,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
 
                                         <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Add Question</button>
 

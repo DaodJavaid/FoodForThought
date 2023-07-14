@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace FoodForThrought.Controllers
 {
 
-  //  facial expression in to one of four categories(0=Angry, 1=Fear, 3=Happy, 4=Sad).
+  //  facial expression in to one of four categories(0=Angry, 1=Fear, 2=Happy, 3=Sad).
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -111,18 +111,12 @@ namespace FoodForThrought.Controllers
 
             Trainmodel(imagePath_fromfolder);
 
-            // Deleting the folder after detect emotion
-            string folderPath1 = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-            DirectoryInfo di = new DirectoryInfo(folderPath1);
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
             
+
             var show_question = _questionnaireDbContext.Question.ToList();
 
 
-            return View();
+            return View(show_question);
         }
 
         [HttpPost]
@@ -357,7 +351,30 @@ namespace FoodForThrought.Controllers
             .Aggregate((a, b) => (a.Value > b.Value) ? a : b)
             .Index;
 
+            ViewBag.PredictedLabelIndex = predictedLabelIndex;
             ViewBag.PredictedLabel = (EmotionLable)predictedLabelIndex;
+
+            DeleteEmotionFolder();
+        }
+
+        public void DeleteEmotionFolder()
+        {
+            string currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            string newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "newFolderName");
+
+            // If the destination directory doesn't exist yet, move the directory.
+            // If it does exist, this will throw an exception.
+            do
+            {
+                if (!Directory.Exists(newFolderPath))
+                {
+                    Directory.Move(currentFolderPath, newFolderPath);
+                }
+                else
+                {
+                    Directory.Delete(newFolderPath, true);
+                }
+            } while (!Directory.Exists(newFolderPath));
         }
 
         //onvert an image into a grayscale and resize it to 48x48

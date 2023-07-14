@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodForThrought.Migrations.QuestionnaireDb
 {
     [DbContext(typeof(QuestionnaireDbContext))]
-    [Migration("20230528180551_Questionnaire")]
-    partial class Questionnaire
+    [Migration("20230714150555_Questions")]
+    partial class Questions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,6 +45,10 @@ namespace FoodForThrought.Migrations.QuestionnaireDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("second_option")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("select_emotion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
