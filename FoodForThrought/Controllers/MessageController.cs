@@ -32,33 +32,29 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletingMessage(ContactUsForm contactus)
+        public IActionResult Deleting_Message(ContactUsForm Message)
         {
-
             try
             {
-                var contactUs = _contactDbcontext.Message.Find(contactus.user_email);
-
-                if (contactUs != null)
+                var messages = _contactDbcontext.Message.Find(Message.old_user_email);
+                if (messages != null)
                 {
-                    _contactDbcontext.Remove(contactUs);
+                    _contactDbcontext.Message.Remove(messages);
                     _contactDbcontext.SaveChanges();
-                    TempData["confirm"] = "Mesage Deleted Successfully";
+                    TempData["confirm"] = "Message Deleted Successfully";
                 }
                 else
                 {
-                    TempData["confirm"] = "Email Not Found";
+                    TempData["confirm"] = "Message Not Found";
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Handle the exception (e.g. log it)
-                TempData["confirm"] = "Error Deleting Contact Us Data";
+                TempData["confirm"] = "There is Some Error. Message Not Deleted";
             }
 
             return RedirectToAction("DeleteMessage");
         }
-
 
     }
 }

@@ -166,7 +166,7 @@ namespace FoodForThrought.Controllers
             catch (SmtpFailedRecipientException ex)
             {
                
-                TempData["confirm"] = "Not";
+                TempData["confirm"] = ex.Message;
             }
 
             if(TempData["confirm"] == "Done")
