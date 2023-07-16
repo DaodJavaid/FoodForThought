@@ -13,11 +13,16 @@ using Microsoft.ML;
 using System.Drawing;
 using Microsoft.ML.Data;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FoodForThrought.Controllers
 {
 
-  //  facial expression in to one of four categories(0=Angry, 1=Fear, 2=Happy, 3=Sad).
+    //  facial expression in to one of four categories(0=Angry, 1=Fear, 2=Happy, 3=Sad).
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -25,13 +30,10 @@ namespace FoodForThrought.Controllers
         public readonly ContactDbcontext _contactDbcontext;
         public readonly ProductimageDbcontext _displayProductnow;
         public readonly QuestionnaireDbContext _questionnaireDbContext;
-
-
-
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public HomeController(ILogger<HomeController> logger,
-               RegisterDbcontext registerDbcontext, 
+               RegisterDbcontext registerDbcontext,
                ContactDbcontext contactDbcontext,
                ProductimageDbcontext displayProductnow,
                QuestionnaireDbContext questionnaireDbContext,
@@ -39,7 +41,7 @@ namespace FoodForThrought.Controllers
         {
             _logger = logger;
             _registerDbcontext = registerDbcontext;
-            _contactDbcontext =  contactDbcontext;
+            _contactDbcontext = contactDbcontext;
             _displayProductnow = displayProductnow;
             _questionnaireDbContext = questionnaireDbContext;
             _webHostEnvironment = webHostEnvironment;
@@ -63,10 +65,15 @@ namespace FoodForThrought.Controllers
         {
             return View();
         }
-        
+
         public IActionResult Contact()
         {
             return View();
+        }
+
+        public IActionResult Result()
+        {
+           return View();
         }
 
         public IActionResult Single_catalouge(int id)
@@ -362,20 +369,79 @@ namespace FoodForThrought.Controllers
             string currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
             string newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "newFolderName");
 
-            // If the destination directory doesn't exist yet, move the directory.
-            // If it does exist, this will throw an exception.
-            do
+            if(Directory.Exists(newFolderPath))
             {
+                Directory.Delete(newFolderPath, true);
+            }
+            else
+            {
+                Directory.Move(currentFolderPath, newFolderPath);
+            }
+
+
+            // If the directory exists
+            if (Directory.Exists(currentFolderPath))
+            {
+                string[] files = Directory.GetFiles(currentFolderPath);
+
+                // Loop over the files
+                foreach (string file in files)
+                {
+                    // Attempt to open the file to see if it's in use
+                    try
+                    {
+                        using (var stream = new FileStream(file, FileMode.Open))
+                        {
+                            // If we can open the file without an exception being thrown, 
+                            // it means the file is not in use elsewhere
+                            Console.WriteLine($"File {file} is not in use.");
+                        }
+
+                        // You might need to add some delay here if you still have issues with deleting files
+                        // System.Threading.Thread.Sleep(1000);
+                    }
+                    catch (IOException)
+                    {
+                        // If an IOException is thrown, it means the file is in use elsewhere
+                        Console.WriteLine($"File {file} is in use. Can't delete it now.");
+                        return; // If we can't delete one file, we probably shouldn't delete the folder, so return
+                    }
+                }
+
+                // If we've gotten to this point, it means all the files are not in use and can be deleted
+
+                // Check if the newFolderPath exists, if not rename currentFolder to newFolder
                 if (!Directory.Exists(newFolderPath))
                 {
                     Directory.Move(currentFolderPath, newFolderPath);
                 }
                 else
                 {
-                    Directory.Delete(newFolderPath, true);
+                    // Delete the directory
+                    Directory.Delete(currentFolderPath, true);
                 }
-            } while (!Directory.Exists(newFolderPath));
+            }
         }
+
+        /*      public void DeleteEmotionFolder()
+              {
+                  string currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                  string newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "newFolderName");
+
+                  // If the destination directory doesn't exist yet, move the directory.
+                  // If it does exist, this will throw an exception.
+                  do
+                  {
+                      if (!Directory.Exists(newFolderPath))
+                      {
+                          Directory.Move(currentFolderPath, newFolderPath);
+                      }
+                      else
+                      {
+                          Directory.Delete(newFolderPath, true);
+                      }
+                  } while (!Directory.Exists(newFolderPath));
+              } */
 
         //onvert an image into a grayscale and resize it to 48x48
         private float[] ConvertImageToInput(string imagePath)
@@ -407,6 +473,117 @@ namespace FoodForThrought.Controllers
             [VectorType(7)] // If your model outputs a probability distribution over 7 classes, adjust if not correct
             public float[] PredictedLabels { get; set; }
         }
+
+        /***************************   Food Prediction  *********************************/
+
+        public async Task<IActionResult> PredictFoodusingAPI(QuestionnaireModel foodans)
+        {
+            using (var client = new HttpClient())
+            {
+                // Update with your API's URL
+                var url = "http://127.0.0.1:5000/predict";
+
+                var input = new QuestionforPrediction
+                {
+                    Question1 = ConvertAnswerToFloat(foodans.Fullquestion1, foodans.question1),
+                    Question2 = ConvertAnswerToFloat(foodans.Fullquestion2, foodans.question2),
+                    Question3 = ConvertAnswerToFloat(foodans.Fullquestion3, foodans.question3),
+                    Question4 = ConvertAnswerToFloat(foodans.Fullquestion4, foodans.question4)
+                };
+
+
+                // Serialize input
+                var json = JsonConvert.SerializeObject(input);
+
+                // Create StringContent with JSON data
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Send the POST request
+                var response = await client.PostAsync(url, data);
+
+                // Ensure the request was successful
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read and deserialize the response content
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<MyModelOutput>(content);
+
+                    // Use the result
+                    ViewBag.Prediction = ConvertPredictionToLabel(result.prediction[0]);
+
+                }
+                else
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ViewBag.Error = "Error: " + response.StatusCode + " " + content;
+                }
+            }
+            return View("Result");
+        }
+
+        private float ConvertAnswerToFloat(string question, string answer)
+        {
+            Dictionary<string, Dictionary<string, int>> questionAnswerMappings = new Dictionary<string, Dictionary<string, int>>
+            {
+                //Happy Emotion Questions
+               { "How often do you reward yourself with a special treat when you're happy?", new Dictionary<string, int> { { "Very often", 5 }, { "Sometimes", 2 }, { "Rarely", 3 }, { "Never", 5 } } },
+               { "How likely are you to share a meal with others when you're happy?", new Dictionary<string, int> { { "Very likely", 2 }, { "Somewhat likely", 3 }, { "Not very likely", 12 }, { "Not at all likely", 8 } } },
+               { "Would you prefer a small, satisfying dish or a large meal when happy?", new Dictionary<string, int> { { "Small, satisfying dish", 2 }, { "Large meal", 8 }, { "It depends", 7 }, { "I don't know", 14 } } },
+               { "Do you tend to choose more indulgent options when you're feeling happy?", new Dictionary<string, int> { { "Yes, often", 7 }, { "Yes, sometimes", 3 }, { "Rarely", 6 }, { "Never", 2 } } },
+
+      
+               //Sad Emotion Questions
+               { "Do you find comfort in food when you're feeling down?", new Dictionary<string, int> { { "Always", 7 }, { "Sometimes", 2 }, { "Rarely", 3 }, { "Never", 5 } } },
+               { "Do you eat more or less when you're feeling sad?", new Dictionary<string, int> { { "More", 5 }, { "Less", 9 }, { "The same amount", 13 }, { "It depends", 7 } } },
+               { "How likely are you to skip meals when you're sad?", new Dictionary<string, int> { { "Very likely", 13 }, { "Somewhat likely", 3 }, { "Not very likely", 9 }, { "Not at all likely", 12 } } },
+               { "How often do you snack between meals when you're feeling sad?", new Dictionary<string, int> { { "Very often", 5 }, { "Sometimes", 9 }, { "Rarely", 6 }, { "Never", 2 } } },
+
+
+                //Fear Emotion Questions
+               { "How does fear or anxiety affect your appetite?", new Dictionary<string, int> { { "I eat more", 6 }, { "I eat less", 9 }, { "It doesn't affect my eating habits", 4 }, { "It depends", 1 } } },
+               { "How often do you snack when feeling scared or anxious?", new Dictionary<string, int> { { "Always", 4 }, { "Sometimes", 14 }, { "Rarely", 10 }, { "Never", 1 } } },
+               { "Do you tend to eat healthier or unhealthier when you're feeling scared or anxious?", new Dictionary<string, int> { { "Healthier", 1 }, { "Unhealthier", 15 }, { "It doesn't affect my food choices", 10 }, { "I don't know", 14 } } },
+               { "Do you tend to eat alone or with others when you're scared or anxious?", new Dictionary<string, int> { { "Alone", 1 }, { "With others", 10 }, { "It doesn't matter", 4 }, { "I don't eat when I'm scared or anxious", 8 } } },
+
+
+                //Anger Emotion Questions
+               { "How often do you eat out of frustration or anger?", new Dictionary<string, int> { { "Always", 7 }, { "Sometimes", 2 }, { "Rarely", 3 }, { "Never", 5 } } },
+               { "Do you tend to eat faster when you're angry?", new Dictionary<string, int> { { "Yes, always", 11 }, { "Yes, sometimes", 6 }, { "Rarely", 10 }, { "Never", 1 } } },
+               { "When you're angry, do you prefer to eat alone or with others?", new Dictionary<string, int> { { "Alone", 5 }, { "With others", 11 }, { "It doesn't matter", 4 }, { "I don't eat when I'm angry", 6 } } },
+               { "Do you opt for quick, easy meals when you're angry?", new Dictionary<string, int> { { "Yes, often", 7 }, { "Yes, sometimes", 3 }, { "Rarely", 6 }, { "Never", 2 } } },
+
+            };
+
+            if (questionAnswerMappings.TryGetValue(question, out var answerMappings))
+            {
+                if (answerMappings.TryGetValue(answer, out var numericalAnswer))
+                {
+                    return numericalAnswer;
+                }
+            }
+
+            throw new ArgumentException($"Invalid question or answer: {question} - {answer}");
+        }
+
+        public string ConvertPredictionToLabel(float prediction)
+        {
+            switch (prediction)
+            {
+                case 1:
+                    return "Desi Food";
+                case 2:
+                    return "Fast Food";
+                // Add more cases as needed
+                default:
+                    return "Unknown Your Model give some error";
+            }
+        }
+
+        public class MyModelOutput
+        {
+            public List<float> prediction { get; set; }
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

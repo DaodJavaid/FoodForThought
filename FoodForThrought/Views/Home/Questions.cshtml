@@ -40,35 +40,427 @@
 <div class="container">
     <h3 class="text-center">Some @ViewBag.PredictedLabel Emotion Related Question For Predicting Food Categories</h3>
     <hr>
-    <form >
-       @foreach (var emotion_questions in Model)
-       {
-          if (emotion_number == Convert.ToInt32(emotion_questions.select_emotion))
-          {     
-            <div class="form-group">
-                <p> @Html.DisplayFor(modelItem => emotion_questions.emotion_questtion)</p>
-               <div class="form-row">
-                  <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="question1" id="question1_1" value="option1">
-                        <label class="form-check-label" for="question1_1">@Html.DisplayFor(modelItem => emotion_questions.first_option)</label>
-                  </div>
-                  <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="question1" id="question1_2" value="option2">
-                        <label class="form-check-label" for="question1_2">@Html.DisplayFor(modelItem => emotion_questions.second_option)</label>
-                  </div>
-                  <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="question1" id="question1_3" value="option3">
-                        <label class="form-check-label" for="question1_3">@Html.DisplayFor(modelItem => emotion_questions.third_option)</label>
-                  </div>
-                  <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="question1" id="question1_3" value="option3">
-                        <label class="form-check-label" for="question1_3">@Html.DisplayFor(modelItem => emotion_questions.forth_option)</label>
-                  </div>
-               </div>
-            </div>
-          }
-       }
 
+
+    <form method="post" action="/Home/PredictFoodusingAPI">
+       
+        @if (emotion_number == 0)
+        {
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion1" value="How often do you eat out of frustration or anger?" />
+                <label for="question1">How often do you eat out of frustration or anger?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Always" required>
+                        <label class="form-check-label">Always</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Sometimes" required>
+                        <label class="form-check-label">Sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion2" value="Do you tend to eat faster when you're angry?" />
+                <label for="question2">Do you tend to eat faster when you're angry?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Yes, always" required>
+                        <label class="form-check-label">Yes, always</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Yes, sometimes" required>
+                        <label class="form-check-label">Yes, sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion3" value="When you're angry, do you prefer to eat alone or with others?" />
+                <label for="question3">When you're angry, do you prefer to eat alone or with others?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Alone" required>
+                        <label class="form-check-label">Alone</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="With others" required>
+                        <label class="form-check-label">With others</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="It doesn't matter" required>
+                        <label class="form-check-label">It doesn't matter</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="I don't eat when I'm angry" required>
+                        <label class="form-check-label">I don't eat when I'm angry</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion4" value="Do you opt for quick, easy meals when you're angry?" />
+                <label for="question4">Do you opt for quick, easy meals when you're angry?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Yes, often" required>
+                        <label class="form-check-label">Yes, often</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Yes, sometimes" required>
+                        <label class="form-check-label">Yes, sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (emotion_number == 1)
+        {
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion1" value="How does fear or anxiety affect your appetite?" />
+                <label for="question1">How does fear or anxiety affect your appetite?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="I eat more" required>
+                        <label class="form-check-label">I eat more</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="I eat less" required>
+                        <label class="form-check-label">I eat less</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="It doesn't affect my eating habits" required>
+                        <label class="form-check-label">It doesn't affect my eating habits</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="It depends" required>
+                        <label class="form-check-label">It depends</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion2" value="How often do you snack when feeling scared or anxious?" />
+                <label for="question2">How often do you snack when feeling scared or anxious?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Always" required>
+                        <label class="form-check-label">Always</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Sometimes" required>
+                        <label class="form-check-label">Sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion3" value="Do you tend to eat healthier or unhealthier when you're feeling scared or anxious?" />
+                <label for="question3">Do you tend to eat healthier or unhealthier when you're feeling scared or anxious?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Healthier" required>
+                        <label class="form-check-label">Healthier</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Unhealthier" required>
+                        <label class="form-check-label">Unhealthier</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="It doesn't affect my food choices" required>
+                        <label class="form-check-label">It doesn't affect my food choices</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="I don't know" required>
+                        <label class="form-check-label">I don't know</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion4" value="Do you tend to eat alone or with others when you're scared or anxious?" />
+                <label for="question4">Do you tend to eat alone or with others when you're scared or anxious?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Alone" required>
+                        <label class="form-check-label">Alone</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="With others" required>
+                        <label class="form-check-label">With others</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="It doesn't matter" required>
+                        <label class="form-check-label">It doesn't matter</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="I don't eat when I'm scared or anxious" required>
+                        <label class="form-check-label">I don't eat when I'm scared or anxious</label>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (emotion_number == 2)
+        {
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion1" value="How often do you reward yourself with a special treat when you're happy?" />
+                <label for="question1">How often do you reward yourself with a special treat when you're happy?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Very often" required>
+                        <label class="form-check-label">Very often</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Sometimes" required>
+                        <label class="form-check-label">Sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion2" value="How likely are you to share a meal with others when you're happy?" />
+                <label for="question2">How likely are you to share a meal with others when you're happy?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Very likely" required>
+                        <label class="form-check-label">Very likely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Somewhat likely" required>
+                        <label class="form-check-label">Somewhat likely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Not very likely" required>
+                        <label class="form-check-label">Not very likely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Not at all likely" required>
+                        <label class="form-check-label">Not at all likely</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion3" value="Would you prefer a small, satisfying dish or a large meal when happy?" />
+                <label for="question3">Would you prefer a small, satisfying dish or a large meal when happy?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Small, satisfying dish" required>
+                        <label class="form-check-label">Small, satisfying dish</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Large meal" required>
+                        <label class="form-check-label">Large meal</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="It depends" required>
+                        <label class="form-check-label">It depends</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="I don't know" required>
+                        <label class="form-check-label">I don't know</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion4" value="Do you tend to choose more indulgent options when you're feeling happy?" />
+                <label for="question4">Do you tend to choose more indulgent options when you're feeling happy?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Yes, often" required>
+                        <label class="form-check-label">Yes, often</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Yes, sometimes" required>
+                        <label class="form-check-label">Yes, sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+        }
+        @if (emotion_number == 3)
+        {
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion1" value="Do you find comfort in food when you're feeling down?" />
+                <label for="question1">Do you find comfort in food when you're feeling down?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Always" required>
+                        <label class="form-check-label">Always</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Sometimes" required>
+                        <label class="form-check-label">Sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question1" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion2" value="Do you eat more or less when you're feeling sad?" />
+                <label for="question2">Do you eat more or less when you're feeling sad?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="More" required>
+                        <label class="form-check-label">More</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="Less" required>
+                        <label class="form-check-label">Less</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="The same amount" required>
+                        <label class="form-check-label">The same amount</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question2" value="It depends" required>
+                        <label class="form-check-label">It depends</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion3" value="How likely are you to skip meals when you're sad?" />
+                <label for="question3">How likely are you to skip meals when you're sad?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Very likely" required>
+                        <label class="form-check-label">Very often</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Somewhat likely" required>
+                        <label class="form-check-label">Somewhat likely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Not very likely" required>
+                        <label class="form-check-label">Not very likely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question3" value="Not at all likely" required>
+                        <label class="form-check-label">Not at all likely</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="FullQuestion4" value="How often do you snack between meals when you're feeling sad?" />
+                <label for="question4">How often do you snack between meals when you're feeling sad?</label>
+                <div class="row">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Very often" required>
+                        <label class="form-check-label">Very often</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Sometimes" required>
+                        <label class="form-check-label">Sometimes</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Rarely" required>
+                        <label class="form-check-label">Rarely</label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" name="question4" value="Never" required>
+                        <label class="form-check-label">Never</label>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+       @* @foreach (var emotion_question in Model)
+        {
+            if (emotion_number == Convert.ToInt32(emotion_question.select_emotion))
+            {
+                questionCount++;
+                <div class="form-group">
+                    <input type="hidden" name="[@questionCount].emotion_questtion" value="@emotion_question.emotion_questtion" />
+                    <input type="hidden" name="[@questionCount].first_option" value="@emotion_question.first_option" />
+                    <input type="hidden" name="[@questionCount].second_option" value="@emotion_question.second_option" />
+                    <input type="hidden" name="[@questionCount].third_option" value="@emotion_question.third_option" />
+                    <input type="hidden" name="[@questionCount].forth_option" value="@emotion_question.forth_option" />
+                    <input type="hidden" name="[@questionCount].select_emotion" value="@emotion_question.select_emotion" />
+
+                    <label for="Question@questionCount">@Html.DisplayFor(modelItem => emotion_question.emotion_questtion)</label>
+                    <div class="form-row">
+                        <div class="form-check col-3">
+                            <input class="form-check-input" type="radio" name="[@questionCount].SelectedOption" id="question@questionCount_1" value="@emotion_question.first_option">
+                            <label class="form-check-label" for="question@questionCount_1">@emotion_question.first_option</label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input class="form-check-input" type="radio" name="[@questionCount].SelectedOption" id="question@questionCount_2" value="@emotion_question.second_option">
+                            <label class="form-check-label" for="question@questionCount_2">@emotion_question.second_option</label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input class="form-check-input" type="radio" name="[@questionCount].SelectedOption" id="question@questionCount_3" value="@emotion_question.third_option">
+                            <label class="form-check-label" for="question@questionCount_3">@emotion_question.third_option</label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input class="form-check-input" type="radio" name="[@questionCount].SelectedOption" id="question@questionCount_4" value="@emotion_question.forth_option">
+                            <label class="form-check-label" for="question@questionCount_4">@emotion_question.forth_option</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+      *@
+        
         <button type="submit" class="btn btn-primary" id="Register_button">Submit</button>
     </form>
+
 </div>

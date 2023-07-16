@@ -15,5 +15,25 @@ namespace FoodForThrought.Models
         public string select_emotion { get; set; }
         [NotMapped]
         public int old_id { get; set; }
+        
+        [NotMapped]
+        public string question1 { get; set; }
+        [NotMapped]
+        public string question2 { get; set; }
+        [NotMapped]
+        public string question3 { get; set; }
+        [NotMapped]
+        public string question4 { get; set; }
+
+        [NotMapped]
+        public string Fullquestion1 { get; set; }
+        [NotMapped]
+        public string Fullquestion2 { get; set; }
+        [NotMapped]
+        public string Fullquestion3 { get; set; }
+        [NotMapped]
+        public string Fullquestion4 { get; set; }
+
+
     }
 }
