@@ -1,4 +1,5 @@
 ﻿using FoodForThrought.Data;
+using FoodForThrought.Migrations.QuestionnaireDb;
 using FoodForThrought.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -85,19 +86,75 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateQuestion(QuestionnaireModel questioning)
+        public async Task<IActionResult> UpdateQuestion(QuestionnaireModel questioning)
         {
-            var delete_product = _questionnaireDbContext.Question.ToList();
+            var existingQuestion = _questionnaireDbContext.Question.FirstOrDefault(u => u.Id == questioning.old_id);
 
-            Deleting_question(questioning);
 
-            Adding_question(questioning);
-
-            TempData["confirm"] = "Product Update Successfully";
+            if (existingQuestion != null)
+            {
+                    existingQuestion.emotion_questtion =   questioning.emotion_questtion;
+                    existingQuestion.first_option      =   questioning.first_option;
+                    existingQuestion.second_option     =   questioning.second_option;
+                    existingQuestion.third_option      =   questioning.third_option;
+                    existingQuestion.forth_option      =   questioning.forth_option;
+                    existingQuestion.select_emotion    =   questioning.select_emotion;
+                 
+                try
+                    {
+                              _questionnaireDbContext.Update(existingQuestion);
+                        await _questionnaireDbContext.SaveChangesAsync();
+                        TempData["confirm"] = "Question Updated Successfully";
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.InnerException != null)
+                        {
+                            ViewBag.ErrorMessage = e.InnerException.Message;
+                        }
+                        else
+                        {
+                            ViewBag.ErrorMessage = e.Message;
+                        }
+                        TempData["confirm"] = "There is some error. Question not updated.";
+                    }
+               
+            }
+            else
+            {
+                TempData["confirm"] = "Question Not Found";
+            }
 
             return RedirectToAction("SearchandUpdateQuestion");
         }
 
 
+        public IActionResult Search(QuestionnaireModel searchquestion)
+        {
+
+            var question = _questionnaireDbContext.Question.FirstOrDefault(u => u.Id == searchquestion.old_id);
+
+
+            if (question == null)
+            {
+                // User not found
+
+                TempData["confirm"] = "Question not found Check Question ID Plz";
+                return View();
+            }
+
+            TempData["Question"] = question.emotion_questtion;
+            TempData["Option1"] = question.first_option;
+            TempData["Option2"] = question.second_option;
+            TempData["Option3"] = question.third_option;
+            TempData["Option4"] = question.forth_option;
+            TempData["Emotion"] = question.select_emotion;
+            TempData["QuestionID"] = question.Id;
+
+
+
+            // Pass the user data to the view
+            return RedirectToAction("SearchandUpdateQuestion");
+        }
     }
 }

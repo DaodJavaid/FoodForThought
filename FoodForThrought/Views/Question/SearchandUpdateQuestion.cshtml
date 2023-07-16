@@ -123,40 +123,61 @@
 
                                 <div id="morris-line-example" class="morris-chart" style="height: 320px;">
 
-                                    <form method="post" action="UpdateQuestion" id="Register_form" enctype="multipart/form-data">
+
+                                    <form method="post" action="Search" id="Register_form" enctype="multipart/form-data">
                                         <h1>Enter Old Question ID</h1>
                                         <div class="form-group">
                                             <input type="number" name="old_id" class="form-control" id="inputname1" placeholder="Enter Old Question ID" />
+                                            <button type="submit" class="btn btn-primary" id="Register_button" >Get Question Data</button>
                                         </div>
-                                        <h1>Enter Updated Data</h1>
+                                    </form>
+
+
+                                    <form method="post" action="UpdateQuestion" id="Register_form" enctype="multipart/form-data">
+                                        <h1>Enter Updated Question Data</h1>
 
                                         <div class="form-group">
-                                            <input type="text" name="emotion_questtion" class="form-control" id="inputname1" placeholder="Enter Question" />
+                                            <input type="text" name="emotion_questtion" class="form-control" id="inputname1" placeholder="Enter Question" value="@TempData["Question"]" />
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <input type="text" name="first_option" class="form-control" id="inputname1" placeholder="Enter First Option" />
+                                                    <input type="text" name="first_option" class="form-control" id="inputname1" placeholder="Enter First Option" value="@TempData["Option1"]" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <input type="text" name="second_option" class="form-control" id="inputname2" placeholder="Enter Second Option" />
+                                                    <input type="text" name="second_option" class="form-control" id="inputname2" placeholder="Enter Second Option" value="@TempData["Option2"]" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <input type="text" name="third_option" class="form-control" id="inputname3" placeholder="Enter Third Option" />
+                                                    <input type="text" name="third_option" class="form-control" id="inputname3" placeholder="Enter Third Option" value="@TempData["Option3"]" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <input type="text" name="forth_option" class="form-control" id="inputname4" placeholder="Enter Forth Option" />
+                                                    <input type="text" name="forth_option" class="form-control" id="inputname4" placeholder="Enter Forth Option" value="@TempData["Option4"]" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="select_emotion" class="form-control" id="inputname1" placeholder="Emotion" value="@TempData["Emotion"]" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <input type="number" name="old_id" class="form-control" id="inputname1" placeholder="Old Question ID" value="@TempData["QuestionID"]" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Add Question</button>
+
+                                        <button type="submit" class="btn btn-primary" id="Register_button" style="margin-top: 15px;">Update Question</button>
 
 
                                     </form>

@@ -97,7 +97,6 @@ namespace FoodForThrought.Controllers
             return RedirectToAction("DeleteRegisterUser");
         }
 
-
         public async Task<IActionResult> Update_user(AdminRegister udpateuser)
         {
             var existingUser = _registerDbcontext.Signup.FirstOrDefault(u => u.email == udpateuser.email_old);
@@ -147,81 +146,6 @@ namespace FoodForThrought.Controllers
 
             return RedirectToAction("SearchandUpdateRegisterUser");
         }
-
-
-
-        /* 
-         public async Task<IActionResult> Update_user(AdminRegister udpateuser)
-         {
-             var userToDelete = _registerDbcontext.Signup.FirstOrDefault(u => u.email == udpateuser.email_old);
-
-             if (userToDelete != null)
-             {
-                 _registerDbcontext.Entry(userToDelete).State = EntityState.Detached; // detach previously tracked entity
-                 udpateuser.Id = userToDelete.Id; // set the Id of the entity to be deleted
-                 _registerDbcontext.Remove(udpateuser);
-                 _registerDbcontext.SaveChanges();
-             }
-             else
-             {
-                 TempData["confirm"] = "User Not Found";
-             }
-
-
-             var check_registration = _registerDbcontext.Signup.ToList();
-
-             if (check_registration != null)
-             {
-                 foreach (var getdata in check_registration)
-                 {
-                     String mail = getdata.email;
-
-                     if (udpateuser.email_old == mail)
-                     {
-                         TempData["confirm"] = "Email Already Exit";
-                         return RedirectToAction("SearchandUpdateRegisterUser");
-                     }
-                 }
-             }
-             udpateuser.email = udpateuser.email_old;
-
-
-
-             if (udpateuser.password == udpateuser.confirm_password)
-             {
-                 try
-                 {
-                     await _registerDbcontext.AddAsync(udpateuser);
-                     await _registerDbcontext.SaveChangesAsync();
-                     TempData["confirm"] = "User Update Successfully";
-                 }
-                 catch (Exception e)
-                 {
-                     if (e.InnerException != null)
-                     {
-                         ViewBag.ErrorMessage = e.InnerException.Message;
-                     }
-                     else
-                     {
-                         ViewBag.ErrorMessage = e.Message;
-                     }
-                     TempData["confirm"] = "There is Some Error. user Not Update";
-                 }
-
-             }
-             else
-             {
-                 TempData["confirm"] = "Password and Confirm Password Did Not Same";
-                 return RedirectToAction("SearchandUpdateRegisterUser");
-             }
-
-
-             return RedirectToAction("SearchandUpdateRegisterUser");
-
-
-         }
-
-         */
 
         public IActionResult Search(AdminRegister searchuser)
         {
