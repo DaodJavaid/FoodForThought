@@ -73,7 +73,19 @@ namespace FoodForThrought.Controllers
 
         public IActionResult Result()
         {
-           return View();
+            if (_displayProductnow?.AddingProduct == null)
+            {
+                ViewBag.ErrorMessage = "No valid source for product data.";
+                return View();
+            }
+
+            var show_product = _displayProductnow.AddingProduct.ToList();
+            if (show_product.Count == 0)
+            {
+                ViewBag.ErrorMessage = "No products found.";
+                return View();
+            }
+            return View(show_product);
         }
 
         public IActionResult Single_catalouge(int id)
@@ -326,50 +338,60 @@ namespace FoodForThrought.Controllers
         }
 
         //predict the Emotion on the images
+
         public void Trainmodel(string imagePath)
         {
-           
-            // Create a new MLContext
-            var mlContext = new MLContext();
+            using (FileStream fileStream = new FileStream(imagePath, FileMode.Open))
+            {
+                // Convert FileStream to byte array
+                byte[] imageBytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    imageBytes = memoryStream.ToArray();
+                }
 
-            // Converting image to model input
-            var input = ConvertImageToInput(imagePath);
+                var mlContext = new MLContext();
 
-            // Load data
-            var data = new[] { new ImageData { Conv2DInput = input } };
-            var dataView = mlContext.Data.LoadFromEnumerable(data);
+                // Converting image to model input
+                var input = ConvertImageToInput(imageBytes);
 
-            // Define pipeline
-            string contentRootPath = _webHostEnvironment.ContentRootPath;
-            string modelPath_fromfolder = Path.Combine(contentRootPath, "wwwroot", "model", "my_model.onnx");
 
-            var pipeline = mlContext.Transforms.ApplyOnnxModel(
-                outputColumnNames: new[] { "dense_1" },
-                inputColumnNames: new[] { "conv2d_input" },
-                modelFile: modelPath_fromfolder
-            );
+                // Load data
+                var data = new[] { new ImageData { Conv2DInput = input } };
+                var dataView = mlContext.Data.LoadFromEnumerable(data);
 
-            // Fit the pipeline to the data
-            var model = pipeline.Fit(dataView);
+                // Define pipeline
+                string contentRootPath = _webHostEnvironment.ContentRootPath;
+                string modelPath_fromfolder = Path.Combine(contentRootPath, "wwwroot", "model", "my_model.onnx");
 
-            // Create a prediction engine
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<ImageData, EmotionPrediction>(model);
+                var pipeline = mlContext.Transforms.ApplyOnnxModel(
+                    outputColumnNames: new[] { "dense_1" },
+                    inputColumnNames: new[] { "conv2d_input" },
+                    modelFile: modelPath_fromfolder
+                );
 
-            // Use the model to predict the output of the sample data
-            EmotionPrediction prediction = predictionEngine.Predict(new ImageData { Conv2DInput = input });
+                // Fit the pipeline to the data
+                var model = pipeline.Fit(dataView);
 
-            var predictedLabelIndex = prediction.PredictedLabels
-            .Select((value, index) => new { Value = value, Index = index })
-            .Aggregate((a, b) => (a.Value > b.Value) ? a : b)
-            .Index;
+                // Create a prediction engine
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<ImageData, EmotionPrediction>(model);
 
-            ViewBag.PredictedLabelIndex = predictedLabelIndex;
-            ViewBag.PredictedLabel = (EmotionLable)predictedLabelIndex;
+                // Use the model to predict the output of the sample data
+                EmotionPrediction prediction = predictionEngine.Predict(new ImageData { Conv2DInput = input });
 
-            DeleteEmotionFolder();
+                var predictedLabelIndex = prediction.PredictedLabels
+                .Select((value, index) => new { Value = value, Index = index })
+                .Aggregate((a, b) => (a.Value > b.Value) ? a : b)
+                .Index;
+
+                ViewBag.PredictedLabelIndex = predictedLabelIndex;
+                ViewBag.PredictedLabel = (EmotionLable)predictedLabelIndex;
+            }
+            System.IO.File.Delete(imagePath);
         }
 
-        public void DeleteEmotionFolder()
+        /*        public void DeleteEmotionFolder()
         {
             string currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
             string newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "newFolderName");
@@ -409,7 +431,6 @@ namespace FoodForThrought.Controllers
                     {
                         // If an IOException is thrown, it means the file is in use elsewhere
                         Console.WriteLine($"File {file} is in use. Can't delete it now.");
-                        return; // If we can't delete one file, we probably shouldn't delete the folder, so return
                     }
                 }
 
@@ -426,32 +447,28 @@ namespace FoodForThrought.Controllers
                     Directory.Delete(currentFolderPath, true);
                 }
             }
-        }
-
-        /*      public void DeleteEmotionFolder()
-              {
-                  string currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                  string newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "newFolderName");
-
-                  // If the destination directory doesn't exist yet, move the directory.
-                  // If it does exist, this will throw an exception.
-                  do
-                  {
-                      if (!Directory.Exists(newFolderPath))
-                      {
-                          Directory.Move(currentFolderPath, newFolderPath);
-                      }
-                      else
-                      {
-                          Directory.Delete(newFolderPath, true);
-                      }
-                  } while (!Directory.Exists(newFolderPath));
-              } */
+        } */
 
         //onvert an image into a grayscale and resize it to 48x48
-        private float[] ConvertImageToInput(string imagePath)
+        /* private float[] ConvertImageToInput(string imagePath)
+         {
+             using var bitmap = new Bitmap(System.Drawing.Image.FromFile(imagePath), new Size(48, 48));
+             var input = new float[48 * 48];
+             for (int y = 0; y < bitmap.Height; y++)
+             {
+                 for (int x = 0; x < bitmap.Width; x++)
+                 {
+                     var color = bitmap.GetPixel(x, y);
+                     var grayScale = (color.R * 0.3) + (color.G * 0.59) + (color.B * 0.11);
+                     input[y * bitmap.Width + x] = (float)grayScale / 255;
+                 }
+             }
+             return input;
+         }*/
+        private float[] ConvertImageToInput(byte[] imageBytes)
         {
-            using var bitmap = new Bitmap(System.Drawing.Image.FromFile(imagePath), new Size(48, 48));
+            using var stream = new MemoryStream(imageBytes);
+            using var bitmap = new Bitmap(System.Drawing.Image.FromStream(stream), new Size(48, 48));
             var input = new float[48 * 48];
             for (int y = 0; y < bitmap.Height; y++)
             {
@@ -464,7 +481,6 @@ namespace FoodForThrought.Controllers
             }
             return input;
         }
-
         public class ImageData
         {
             [ColumnName("conv2d_input")]
@@ -523,7 +539,7 @@ namespace FoodForThrought.Controllers
                     ViewBag.Error = "Error: " + response.StatusCode + " " + content;
                 }
             }
-            return View("Result");
+            return RedirectToAction("Result");
         }
 
         private float ConvertAnswerToFloat(string question, string answer)

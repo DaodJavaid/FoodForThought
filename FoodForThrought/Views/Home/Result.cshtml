@@ -1,28 +1,81 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model IEnumerable<FoodForThrought.Models.AddingProductModel>
 @{
+    int emotion_number = 4;
     if (TempData["EmotionNumber"] != null)
     {
-        int emotion_number = (int)TempData["EmotionNumber"];
+        emotion_number = (int)TempData["EmotionNumber"];
         // use emotion_number here
     }
+
+    int final_emotion_number = 4;
+
+    if (emotion_number == 0)
+    {
+        final_emotion_number = 0;
+    }
+    else if (emotion_number == 1)
+    {
+        final_emotion_number = 1;
+    }
+    else if (emotion_number == 2)
+    {
+        final_emotion_number = 2;
+    }
+    else if (emotion_number == 3)
+    {
+        final_emotion_number = 2;
+    }
+
+
 }
 
 
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="row">
-
-        <h3 style="text-align: center">The Predict Food Categories is: @ViewBag.Prediction</h3>
-        <h6 style="text-align: center">This Food Categories based on your Emotion and Emotion Related Question</h6>
+<div class="wrapper">
+    <div class="col-12 text-center">
+        <h3 id="title_home_3section">Here are the foods that will be good for you according to your mood and mood related Question</h3>
     </div>
+    <section id="shop3Columns" class="shop shop-grid shop-grid-3col pb-90">
+        <div class="container">
+            <div class="row filtered-items-wrap">
+
+                @if (Model != null)
+                {
+                    @foreach (var items in Model)
+                    {
+                    if (final_emotion_number == Convert.ToInt32(items.food_type))
+                    {
+                        
+                    
+                    <div class="col-sm-4 col-md-4 col-lg-3 mix filter-soup">
+                        <div class="product-item">
+                            <div class="product__img">
+                                            <img id="imagewidth" src="@Url.Content("~/images/Product_image/" + items.product_image_name)" alt="Eggs – with yolk">
+                                        <div class="product__hover">
+                                    <div class="product__action">
+                                        <a asp-controller="Home" asp-action="Detectemotion" class="btn btn__primary btn__hover2">Detect Emotion</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product__content">
+                                      <h4 class="product__title"><a asp-controller="Home" asp-action="Single_catalouge" asp-route-id="@items.Id">@Html.DisplayFor(modelItem => items.product_title)</a></h4>
+                             </div>
+                        </div>
+                    </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>Model is null.</p>
+                }
+            </div>
+        </div>
+    </section>
 </div>
 
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="row">
-
-        <h3 style="text-align: center">Here are the some Food in our databse that fall in your Predict Food Categories</h3>
-    </div>
-</div>
 
 <p>@ViewBag.Error</p>
