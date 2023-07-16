@@ -80,6 +80,11 @@ namespace FoodForThrought.Controllers
         {
             var product = _displayProductnow.AddingProduct.Find(id);
 
+            if (product == null)
+            {
+                TempData["confirm"] = "Product Not Found";
+            }
+
             return View(product);
         }
 

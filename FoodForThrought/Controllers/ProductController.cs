@@ -8,7 +8,6 @@ using System.IO;
 
 namespace FoodForThrought.Controllers
 {
-    [Authorize]
     public class ProductController : Controller
     {
         public readonly ProductimageDbcontext _imageDbcontext;
@@ -59,7 +58,6 @@ namespace FoodForThrought.Controllers
 
             return View(delete_product);
         }
-
         // Add Product In database
         [HttpPost]
         public IActionResult AddProduct(AddingProductModel product)
@@ -106,15 +104,63 @@ namespace FoodForThrought.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchProduct(AddingProductModel delete)
+        public async Task<IActionResult> UpdateProduct_confirm(AddingProductModel updateproduct)
         {
-            var delete_product = _updateProductnow.AddingProduct.ToList();
+            // Fetch the existing product first
+            var existingProduct = _imageDbcontext.AddingProduct.FirstOrDefault(p => p.product_title == updateproduct.product_title_old);
 
-            DeletingProduct(delete);
+            if (existingProduct == null)
+            {
+                TempData["confirm"] = "Product not found";
+                return RedirectToAction("SearchandUpdateProduct");
+            }
 
-            AddProduct(delete);
+            string uniqueFileName = null;
 
-            TempData["confirm"] = "Product Update Successfully";
+            if (updateproduct.product_img_NotMapped != null)
+            {
+                string ImageUploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/Product_image");
+
+                // Delete the old file
+                if (!string.IsNullOrEmpty(existingProduct.product_image_name))
+                {
+                    var oldFilePath = Path.Combine(ImageUploadFolder, existingProduct.product_image_name);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + updateproduct.product_img_NotMapped.FileName;
+                string filePath = Path.Combine(ImageUploadFolder, uniqueFileName);
+
+                string fileDirectory = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(fileDirectory))
+                {
+                    Directory.CreateDirectory(fileDirectory);
+                }
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    updateproduct.product_img_NotMapped.CopyTo(fileStream);
+                }
+
+                // Update the product data
+                existingProduct.product_img = "~/wwwroot/images/Product_image";
+                existingProduct.product_image_name = uniqueFileName;
+                existingProduct.product_title = updateproduct.product_title; // assuming the product has a Name field
+
+                // Update other product fields as required...
+
+                _imageDbcontext.Update(existingProduct);
+                await _imageDbcontext.SaveChangesAsync();
+
+                TempData["confirm"] = "Product updated successfully";
+            }
+            else
+            {
+                TempData["confirm"] = "Product did not update successfully";
+            }
 
             return RedirectToAction("SearchandUpdateProduct");
         }
@@ -188,6 +234,7 @@ namespace FoodForThrought.Controllers
         [HttpPost]
         public IActionResult DeletingProduct(AddingProductModel delete)
         {
+           // delete.product_title_old = "product Update\t";
 
             var delete_product = _deleteProductnow.AddingProduct.ToList();
 
@@ -217,6 +264,7 @@ namespace FoodForThrought.Controllers
                         _deleteProductnow.SaveChanges();
 
                         TempData["confirm"] = "Product Deleted Successfully";
+                        break;
                     }
                     else
                     {

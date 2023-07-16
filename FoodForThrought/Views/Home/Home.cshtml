@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="product__content">
-                                    <h4 class="product__title"><a asp-controller="Home" asp-action="Single_catalouge">@Html.DisplayFor(modelItem => items.product_title)</a></h4>
+                                    <h4 class="product__title"><a asp-controller="Home" asp-action="Single_catalouge" asp-route-id="@items.Id">@Html.DisplayFor(modelItem => items.product_title)</a></h4>
                                 </div>
                             </div>
                         </div>

@@ -36,47 +36,69 @@
 
                 <a class="nav-link text-dark" asp-controller="Home" asp-action="Home"><img src="/images/Logo/LOGO.png" alt="Logo"  id="logo"> </a>
                 
-                <ul class="navbar-nav ml-auto mb-2" id="desktop_Menu">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#" onclick="selectcatalouge()">Catalogue</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
-                    </li>
+                @if (User.Identity.IsAuthenticated && User.HasClaim("OtherProperties", "User"))
+                {
 
-                   
+                    <ul class="navbar-nav ml-auto mb-2" id="desktop_Menu">
+                         <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                         </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#" onclick="selectcatalouge()">Catalogue</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
+                            </li>
 
-                    @* Register Icon and Pages *@
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </button>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            if (User.HasClaim("OtherProperties", "User"))
-                            {
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+
+
+                            @* Register Icon and Pages *@
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Account
+                                </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserDeshboard">Deshboard</a>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a>
                             </div>
-                            }
-                        }
-                        else
-                        {
+                            </div>
+                     </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav ml-auto mb-2" id="desktop_Menu">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="selectcatalouge()">Catalogue</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Get In Touch</a>
+                        </li>
+
+
+
+                        @* Register Icon and Pages *@
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Sign Up</a>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Sign In</a>
                             </div>
-                        }
-                    </div>
-                 </ul>
 
+                        </div>
+                    </ul>
+
+                }
 
                  @************   Mobile Menu   **************
 
