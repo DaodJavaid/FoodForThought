@@ -10,7 +10,9 @@ namespace FoodForThrought.Models
         public string username { get; set; }
         [Required]
         public string email { get; set; }
+        [Required]
         public string password { get; set; }
+        [Required]
         public string confirm_password { get; set; }
         public string address { get; set; }
         public string gender { get; set; }

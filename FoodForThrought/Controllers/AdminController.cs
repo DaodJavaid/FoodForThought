@@ -21,13 +21,18 @@ namespace FoodForThrought.Controllers
         // Check how manay Product Add in database
         public readonly ProductimageDbcontext _displayProductnow;
 
+        // Check how manay Product Add in Database
+        public readonly QuestionnaireDbContext _displayquestionnairenow;
+
         public AdminController(AdminDbContext adminDbContext,
                RegisterDbcontext registerDbcontext,
-               ProductimageDbcontext displayProductnow)
+               ProductimageDbcontext displayProductnow,
+               QuestionnaireDbContext displayquestionnairenow)
         {
             _adminDbContext = adminDbContext;
             _registerDbcontext = registerDbcontext;
             _displayProductnow = displayProductnow;
+            _displayquestionnairenow = displayquestionnairenow;
         }
        
         [Authorize(AuthenticationSchemes = "AdminAuthentication")]
@@ -42,6 +47,12 @@ namespace FoodForThrought.Controllers
             // Check how manay Product Add in database
             int Productcount = _displayProductnow.AddingProduct.Count();
             ViewBag.Productcount = Productcount;
+
+            // Check how manay Question Add in database
+            int Questioncount = _displayquestionnairenow.Question.Count();
+            ViewBag.Questioncount = Questioncount;
+
+
 
             return View(ShowUser);
         }
