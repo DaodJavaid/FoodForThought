@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 /* Authentication Code*/
-builder.Services.AddAuthentication()
+builder.Services.AddAuthentication("ClientAuthentication") // Set default scheme
     .AddCookie("AdminAuthentication", options =>
     {
         options.Cookie.Name = "AdminAuth";
